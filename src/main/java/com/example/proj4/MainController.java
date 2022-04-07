@@ -13,9 +13,6 @@ import java.io.IOException;
 
 public class MainController {
     @FXML
-    private Label welcomeText;
-
-    @FXML
     protected void onDonutButtonClick(ActionEvent event) throws IOException {
 
         try {
