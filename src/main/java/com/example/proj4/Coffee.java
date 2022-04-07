@@ -5,6 +5,11 @@ import java.text.DecimalFormat;
 public class Coffee extends MenuItem{
     private String size;
     private int addOnCount;
+    private Boolean cream;
+    private Boolean syrup;
+    private Boolean milk;
+    private Boolean caramel;
+    private Boolean whippedCream;
 
     private static final double SMALL_PRICE = 1.69;
     private static final double MED_PRICE = 2.09;

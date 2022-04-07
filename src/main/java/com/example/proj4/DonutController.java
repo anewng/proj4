@@ -36,7 +36,7 @@ public class DonutController {
     @FXML
     private ComboBox donutAmountSelect;
     @FXML
-    private Button donutPreviewOrderButton;
+    private Button addToOrder;
     @FXML
     private ListView donutOrderPreview;
 
@@ -61,7 +61,7 @@ public class DonutController {
     }
 
     @FXML
-    protected void onPreviewOrderClick(ActionEvent event) {
+    protected void onAddToOrderClick(ActionEvent event) {
         Donut newDonut = new DonutHole("");
         if(donutTypeSelect.getValue().toString().equals("Donut Hole")) {
             newDonut = new DonutHole(donutFlavorSelect.getValue().toString());
