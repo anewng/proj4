@@ -15,8 +15,8 @@
       <ComboBox fx:id="donutFlavorSelect" layoutX="27.0" layoutY="223.0" prefWidth="150.0" />
       <ComboBox fx:id="donutAmountSelect" layoutX="27.0" layoutY="282.0" prefWidth="150.0" />
       <Button fx:id="donutOrderButton" layoutX="284.0" layoutY="360.0" mnemonicParsing="false" onAction="#onOrderButtonClick" prefHeight="15.0" prefWidth="94.0" style="-fx-background-color: transparent;" />
-      <Button fx:id="addDonutOrder" layoutX="239.0" layoutY="127.0" mnemonicParsing="false" onAction="#onAddDonutOrderClick" style="-fx-background-color: transparent;" text="preview order" />
-      <ListView layoutX="205.0" layoutY="153.0" prefHeight="181.0" prefWidth="168.0" />
+      <Button fx:id="donutPreviewOrderButton" layoutX="244.0" layoutY="119.0" mnemonicParsing="false" onAction="#onPreviewOrderClick" prefHeight="25.0" prefWidth="94.0" style="-fx-background-color: transparent;" />
+      <ListView fx:id="donutOrderPreview" layoutX="205.0" layoutY="153.0" prefHeight="181.0" prefWidth="168.0" />
       <TextField layoutX="140.0" layoutY="360.0" prefHeight="25.0" prefWidth="130.0" />
    </children>
 </AnchorPane>
