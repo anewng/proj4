@@ -26,17 +26,6 @@ public class CoffeeController {
     private void initialize(){
         coffeeSizeSelect.setItems(coffeeSizeList);
         coffeeAmountSelect.setItems(coffeeAmountList);
-    }
-    @FXML
-    protected void onCoffeeSizeSelected(Event itemStateChanged) {
-        if(coffeeSizeSelect.getValue().toString().equals("Short")) {
-            coffeeSizeSelect.setItems(coffeeSizeList);
-        } else if(coffeeSizeSelect.getValue().toString().equals("Tall")) {
-            coffeeSizeSelect.setItems(coffeeSizeList);
-        } else if(coffeeSizeSelect.getValue().toString().equals("Grande")) {
-            coffeeSizeSelect.setItems(coffeeSizeList);
-        } else if(coffeeSizeSelect.getValue().toString().equals("Venti")) {
-            coffeeSizeSelect.setItems(coffeeSizeList);
-        }
+
     }
     }
