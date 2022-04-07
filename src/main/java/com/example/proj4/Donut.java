@@ -15,8 +15,5 @@ public abstract class Donut extends MenuItem {
     }
 
     @Override
-    public String toString() {
-        DecimalFormat d = new DecimalFormat("'$'#,##0.00");
-        return flavor + ", " + d.format(itemPrice());
-    }
+    public abstract String toString();
 }

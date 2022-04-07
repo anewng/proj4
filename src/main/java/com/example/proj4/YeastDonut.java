@@ -1,5 +1,7 @@
 package com.example.proj4;
 
+import java.text.DecimalFormat;
+
 public class YeastDonut extends Donut{
 
     private static final String FLAVOR_1 = "Fungi";
@@ -17,6 +19,12 @@ public class YeastDonut extends Donut{
     @Override
     public double itemPrice() {
         return YEAST_PRICE;
+    }
+
+    @Override
+    public String toString() {
+        DecimalFormat d = new DecimalFormat("'$'#,##0.00");
+        return "Yeast Donut, " + flavor + ", " + d.format(itemPrice());
     }
 
 }
