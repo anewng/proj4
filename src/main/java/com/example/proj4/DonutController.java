@@ -39,8 +39,7 @@ public class DonutController {
     private Button donutPreviewOrderButton;
     @FXML
     private ListView donutOrderPreview;
-    @FXML
-    private Button donutAmountSelect;
+
 
     ArrayList<Donut> donutArrayList = new ArrayList<Donut>();
 

@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj4.DonutController">
+<AnchorPane maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj4.DonutController">
    <children>
        <ImageView fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
            <image>
@@ -14,9 +14,8 @@
       <ComboBox fx:id="donutTypeSelect" layoutX="27.0" layoutY="163.0" onAction="#onDonutTypeSelected" prefHeight="25.0" prefWidth="150.0" visibleRowCount="3" />
       <ComboBox fx:id="donutFlavorSelect" layoutX="27.0" layoutY="223.0" prefWidth="150.0" />
       <ComboBox fx:id="donutAmountSelect" layoutX="27.0" layoutY="282.0" prefWidth="150.0" />
-      <Button fx:id="donutOrderButton" layoutX="284.0" layoutY="360.0" mnemonicParsing="false" onAction="#onOrderButtonClick" prefHeight="15.0" prefWidth="94.0" style="-fx-background-color: transparent;" />
       <Button fx:id="donutPreviewOrderButton" layoutX="244.0" layoutY="119.0" mnemonicParsing="false" onAction="#onPreviewOrderClick" prefHeight="25.0" prefWidth="94.0" style="-fx-background-color: transparent;" />
       <ListView fx:id="donutOrderPreview" layoutX="205.0" layoutY="153.0" prefHeight="181.0" prefWidth="168.0" />
-      <TextField layoutX="140.0" layoutY="360.0" prefHeight="25.0" prefWidth="130.0" />
+      <TextArea layoutX="138.0" layoutY="352.0" minHeight="25.0" prefHeight="25.0" prefWidth="124.0" />
    </children>
 </AnchorPane>
