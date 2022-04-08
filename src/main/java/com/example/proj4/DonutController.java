@@ -1,25 +1,28 @@
 package com.example.proj4;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableIntegerArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-
 public class DonutController {
-    private AnchorPane root;
-    private MainController mainController;
     private static final int NOT_FOUND = -1;
+    private OrderViewController orderViewController;
 
     //donut type list, so that user can select the type of donut to add to order
     ObservableList<String> donutTypeList = FXCollections
@@ -38,8 +41,6 @@ public class DonutController {
             .observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
     @FXML
-    private AnchorPane anchorPane;
-    @FXML
     private ComboBox donutTypeSelect;
     @FXML
     private ComboBox donutFlavorSelect;
@@ -54,9 +55,13 @@ public class DonutController {
     ArrayList<Donut> donutArrayList = new ArrayList<Donut>();
 
     @FXML
-    private void initialize(){
+    private void initialize() throws IOException {
         donutTypeSelect.setItems(donutTypeList);
         donutAmountSelect.setItems(donutAmountList);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("order-view.fxml"));
+        loader.load();
+        orderViewController = loader.getController();
+        orderViewController.setDonutController(this);
     }
 
     @FXML
@@ -163,13 +168,7 @@ public class DonutController {
     protected void onAddToOrderButtonClick(ActionEvent event) throws IOException {
         System.out.println("Slay");
         for (int i = 0; i < donutArrayList.size(); i++) {
-            mainController.orderViewController.getYourOrderArrayList().add(donutArrayList.get(i));
-            System.out.println(donutArrayList.get(i).toString());
+            orderViewController.getYourOrderArrayList().add(donutArrayList.get(i));
         }
     }
-    public void setMainController(MainController controller) {
-        mainController = controller;
-    }
-
-
 }

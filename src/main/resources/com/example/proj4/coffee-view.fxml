@@ -17,7 +17,7 @@
       <CheckBox fx:id="whippedCream" layoutX="269.0" layoutY="172.0" mnemonicParsing="false" onAction="#onAddOnsChecked" />
       <ComboBox fx:id="coffeeSizeSelect" layoutX="23.0" layoutY="155.0" onAction="#onCoffeeSizeSelected" prefWidth="150.0" />
       <ComboBox fx:id="coffeeAmountSelect" layoutX="23.0" layoutY="209.0" onAction="#onCoffeeQuantitySelected" prefWidth="150.0" />
-      <Button fx:id="addToCart" layoutX="286.0" layoutY="359.0" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#onAddToCartButtonClick" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: transparent;" />
+      <Button fx:id="addToCart" layoutX="227.0" layoutY="316.0" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#onAddToCartButtonClick" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: transparent;" />
       <TextField fx:id="coffeeSubtotal" layoutX="15.0" layoutY="313.0" prefHeight="33.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
