@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj4.DonutController">
    <children>
-       <ImageView fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+       <ImageView fx:id="orderButton" fitHeight="400.0" fitWidth="400.0" onDragDetected="#onOrderButtonClick" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@/donutorderbackground.png" />
            </image>

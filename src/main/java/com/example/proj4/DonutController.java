@@ -6,16 +6,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class DonutController {
+    private AnchorPane root;
     private static final int NOT_FOUND = -1;
 
     //donut type list, so that user can select the type of donut to add to order
@@ -34,6 +37,8 @@ public class DonutController {
     ObservableList<String> donutAmountList = FXCollections
             .observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private ComboBox donutTypeSelect;
     @FXML
@@ -158,4 +163,5 @@ public class DonutController {
     protected void onOrderButtonClick(ActionEvent event) {
 
     }
+
 }
