@@ -19,6 +19,7 @@ public class OrderViewController {
 
     private DonutController donutController;
     private CoffeeController coffeeController;
+    private MainController mainController;
 
     private ArrayList<MenuItem> yourOrderArrayList = new ArrayList<MenuItem>();
 
@@ -27,6 +28,8 @@ public class OrderViewController {
 
     @FXML
     private void initialize() throws IOException {
+        System.out.println(mainController.donutController.donutArrayList.get(0));
+        /*
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
             donutController = fxmlLoader.getController();
@@ -40,9 +43,14 @@ public class OrderViewController {
         } catch(Exception e) {
             e.printStackTrace();
         }
+         */
         for (int i = 0; i < yourOrderArrayList.size(); i++) {
             yourOrders.appendText(yourOrderArrayList.get(i).toString());
         }
+    }
+
+    public void setMainController(MainController controller) {
+        mainController = controller;
     }
 
     public ArrayList<MenuItem> getYourOrderArrayList() {

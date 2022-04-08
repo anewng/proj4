@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApplication extends Application {
+    public Stage primaryStage;
 
     @FXML
     public MainController mainController;

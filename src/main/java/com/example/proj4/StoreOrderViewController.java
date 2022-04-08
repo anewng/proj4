@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class StoreOrderViewController {
     private DonutController orderViewController;
     private ArrayList<ArrayList<MenuItem>> storeOrderArrayList = new ArrayList<ArrayList<MenuItem>>();
+    private MainController mainController;
 
     @FXML
     private void initialize() throws IOException {
@@ -20,4 +21,9 @@ public class StoreOrderViewController {
             e.printStackTrace();
         }
     }
+
+    public void setMainController(MainController controller) {
+        mainController = controller;
+    }
+
 }
