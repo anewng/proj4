@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class MainController {
     private String testing = "hi";
-    public Stage stage;
+    public Stage orderViewStage;
 
     @FXML
     public OrderViewController orderViewController;
@@ -26,35 +26,21 @@ public class MainController {
     private void initialize() throws IOException {
         try {
             FXMLLoader orderFXMLLoader = new FXMLLoader(getClass().getResource("order-view.fxml"));
-            Parent root = orderFXMLLoader.load();
-            orderViewController.setRoot(root);
-            orderViewController.setMainController(this);
-            orderViewController = orderFXMLLoader.getController();
+            Parent orderViewRoot = orderFXMLLoader.load();
+            orderViewStage = new Stage();
+            orderViewStage.setScene(new Scene(orderViewRoot));
+            System.out.println("is this working");
 
+            orderViewController.setMainController(this);
+            orderViewController.setRoot(orderViewRoot);
+            //orderViewController = orderFXMLLoader.getController();
         } catch(Exception e) {
             e.printStackTrace();
         }
-/*
-        try {
-            FXMLLoader storeOrderFXMLLoader = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
-            storeOrderViewController = storeOrderFXMLLoader.getController();
-            storeOrderViewController.setMainController(this);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        /*
-        FXMLLoader donutFXMLLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
-        donutController = donutFXMLLoader.getController();
-        donutController.setMainController(this);
-        FXMLLoader coffeeFXMLLoader = new FXMLLoader(getClass().getResource("coffee-view.fxml"));
-        coffeeController = coffeeFXMLLoader.getController();
-        coffeeController.setMainController(this);
-        */
     }
 
     @FXML
     protected void onDonutButtonClick(ActionEvent event) throws IOException {
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
             Parent root1 = fxmlLoader.load();
@@ -81,15 +67,7 @@ public class MainController {
 
     @FXML
     protected void onYourOrderButtonClick(ActionEvent event) throws IOException {
-        try {
-            FXMLLoader orderFXMLLoader = new FXMLLoader(getClass().getResource("order-view.fxml"));
-            Parent root1 = orderFXMLLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        orderViewStage.show();
     }
 
     @FXML

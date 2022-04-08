@@ -11,8 +11,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApplication extends Application {
-    public Stage primaryStage;
-
     @FXML
     public MainController mainController;
 
@@ -24,14 +22,6 @@ public class MainApplication extends Application {
         primaryStage.setTitle("MainView");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public class donutButtonHandler implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent actionEvent) {
-
-        }
     }
 
     public static void main(String[] args) {

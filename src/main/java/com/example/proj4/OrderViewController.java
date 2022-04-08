@@ -2,6 +2,7 @@ package com.example.proj4;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 
 import java.io.IOException;
@@ -17,23 +18,6 @@ public class OrderViewController {
 
     @FXML
     private void initialize() throws IOException {
-        //System.out.println(mainController.donutController.donutArrayList.get(0));
-
-        /*
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
-            donutController = fxmlLoader.getController();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("coffee-view.fxml"));
-            coffeeController = fxmlLoader2.getController();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-         */
         updateListView();
     }
 
@@ -54,6 +38,7 @@ public class OrderViewController {
 
 
     public void setRoot(Parent root) {
-        scene.setRoot(root);
+        Scene cc = yourOrders.getScene();
+        cc.setRoot(root);
     }
 }
