@@ -26,9 +26,10 @@ public class MainController {
     private void initialize() throws IOException {
         try {
             FXMLLoader orderFXMLLoader = new FXMLLoader(getClass().getResource("order-view.fxml"));
-            orderViewController = orderFXMLLoader.getController();
-            System.out.println(orderViewController.test);
+            Parent root = orderFXMLLoader.load();
+            orderViewController.setRoot(root);
             orderViewController.setMainController(this);
+            orderViewController = orderFXMLLoader.getController();
 
         } catch(Exception e) {
             e.printStackTrace();

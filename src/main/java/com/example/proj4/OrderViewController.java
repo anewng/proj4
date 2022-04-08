@@ -1,35 +1,24 @@
 package com.example.proj4;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import javafx.scene.control.ListView;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class OrderViewController {
-    public String test = "hi";
-
-    private DonutController donutController;
-    private CoffeeController coffeeController;
     private MainController mainController;
 
     private ArrayList<MenuItem> yourOrderArrayList = new ArrayList<MenuItem>();
 
     @FXML
-    private TextArea yourOrders;
+    private ListView yourOrders;
 
     @FXML
     private void initialize() throws IOException {
-        System.out.println(mainController.donutController.donutArrayList.get(0));
+        //System.out.println(mainController.donutController.donutArrayList.get(0));
+
         /*
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
@@ -45,8 +34,13 @@ public class OrderViewController {
             e.printStackTrace();
         }
          */
-        for (int i = 0; i < yourOrderArrayList.size(); i++) {
-            yourOrders.appendText(yourOrderArrayList.get(i).toString());
+        updateListView();
+    }
+
+    private void updateListView(){
+        yourOrders.getItems().clear();
+        for(int i = 0; i < yourOrderArrayList.size(); i ++){
+            yourOrders.getItems().add(yourOrderArrayList.get(i));
         }
     }
 
@@ -59,4 +53,7 @@ public class OrderViewController {
     }
 
 
+    public void setRoot(Parent root) {
+        scene.setRoot(root);
+    }
 }
