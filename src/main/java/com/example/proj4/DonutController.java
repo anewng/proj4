@@ -121,7 +121,6 @@ public class DonutController {
         String thirdToken = string.nextToken();
 
         String selectedFlavor = setFlavor(thirdToken); //set the flavor based on the third token
-
         int removalIndex = findFlavorIndex(selectedFlavor);
         donutArrayList.remove(removalIndex);
 
@@ -151,7 +150,7 @@ public class DonutController {
         } else if (thirdToken.equals("Raspberry")) {
             return "Raspberry Jam Swirl";
         } else {
-            return thirdToken;
+            return thirdToken.substring(0,thirdToken.length()-1);
         }
     }
 

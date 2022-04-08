@@ -42,13 +42,8 @@ public class CoffeeController {
     @FXML
     protected void onAddToCartButtonClick(ActionEvent event) {
         Coffee newCoffee = new Coffee();
-        /*if(donutTypeSelect.getValue().toString().equals("Donut Hole")) {
-            newDonut = new DonutHole(donutFlavorSelect.getValue().toString());
-        } else if(donutTypeSelect.getValue().toString().equals("Yeast Donut")) {
-            newDonut = new YeastDonut(donutFlavorSelect.getValue().toString());
-        } else if(donutTypeSelect.getValue().toString().equals("Cake Donut")) {
-            newDonut = new CakeDonut(donutFlavorSelect.getValue().toString());
-        }*/
+        newCoffee.setSize(coffeeSizeSelect.getValue().toString());
+        newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
         coffeeArrayList.add(newCoffee);
 
     }

@@ -1,30 +1,31 @@
 package com.example.proj4;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Coffee extends MenuItem{
     private String size;
     private int addOnCount;
-    private Boolean cream;
-    private Boolean syrup;
-    private Boolean milk;
-    private Boolean caramel;
-    private Boolean whippedCream;
+    private ArrayList<String> addOns;
 
-    private static final double SMALL_PRICE = 1.69;
-    private static final double MED_PRICE = 2.09;
-    private static final double LARGE_PRICE = 2.49;
+    private static final double SHORT_PRICE = 1.69;
+    private static final double TALL_PRICE = 2.09;
+    private static final double GRANDE_PRICE = 2.49;
+    private static final double VENTI_PRICE = 2.89;
     private static final double ADD_IN_PRICE = 0.30;
 
     @Override
     public double itemPrice() {
         double retPrice = 0;
-        if (this.size == "Small") {
-            retPrice += SMALL_PRICE;
-        } else if (this.size == "Medium") {
-            retPrice += MED_PRICE;
-        } else if (this.size == "Large") {
-            retPrice += LARGE_PRICE;
+        if (this.size == "Short") {
+            retPrice += SHORT_PRICE;
+        } else if (this.size == "Tall") {
+            retPrice += TALL_PRICE;
+        } else if (this.size == "Grande") {
+            retPrice += GRANDE_PRICE;
+        } else if (this.size == "Venti") {
+            retPrice += VENTI_PRICE;
         } else {
             return INVALID_CASE;
         }
@@ -36,10 +37,26 @@ public class Coffee extends MenuItem{
         return size;
     }
 
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     @Override
     public String toString() {
         DecimalFormat d = new DecimalFormat("'$'#,##0.00");
         return "Coffee, " + size + ", " + d.format(itemPrice());
+    }
+
+    public void addAddOn(String addOn) {
+        addOns.add(addOn);
+    }
+
+    public void removeAddOn(String addOn) {
+        addOns.remove(addOn);
+    }
+
+    public ArrayList<String> getAddOns() {
+        return addOns;
     }
 
 }
