@@ -1,24 +1,24 @@
 package com.example.proj4;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableIntegerArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+
 public class DonutController {
     private AnchorPane root;
+    private MainController mainController;
     private static final int NOT_FOUND = -1;
 
     //donut type list, so that user can select the type of donut to add to order
@@ -71,7 +71,7 @@ public class DonutController {
     }
 
     @FXML
-    protected void onAddToOrderClick(ActionEvent event) {
+    protected void onAddToCartClick(ActionEvent event) {
         Donut newDonut = new DonutHole("");
         if (donutTypeSelect.getValue().toString().equals("Donut Hole")) {
             newDonut = new DonutHole(donutFlavorSelect.getValue().toString());
@@ -160,8 +160,16 @@ public class DonutController {
     }
 
     @FXML
-    protected void onOrderButtonClick(ActionEvent event) {
-
+    protected void onAddToOrderButtonClick(ActionEvent event) throws IOException {
+        System.out.println("Slay");
+        for (int i = 0; i < donutArrayList.size(); i++) {
+            mainController.orderViewController.getYourOrderArrayList().add(donutArrayList.get(i));
+            System.out.println(donutArrayList.get(i).toString());
+        }
     }
+    public void setMainController(MainController controller) {
+        mainController = controller;
+    }
+
 
 }

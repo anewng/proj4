@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -20,6 +21,9 @@ public class OrderViewController {
     private CoffeeController coffeeController;
 
     private ArrayList<MenuItem> yourOrderArrayList = new ArrayList<MenuItem>();
+
+    @FXML
+    private TextArea yourOrders;
 
     @FXML
     private void initialize() throws IOException {
@@ -36,8 +40,13 @@ public class OrderViewController {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        for (int i = 0; i < yourOrderArrayList.size(); i++) {
+            yourOrders.appendText(yourOrderArrayList.get(i).toString());
+        }
+    }
 
-
+    public ArrayList<MenuItem> getYourOrderArrayList() {
+        return yourOrderArrayList;
     }
 
 
