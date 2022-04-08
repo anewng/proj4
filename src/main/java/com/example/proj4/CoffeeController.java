@@ -46,7 +46,12 @@ public class CoffeeController {
     }
 
     @FXML
-    private Coffee addAddOns() {
-        if ()
+    protected void onAddOnsChecked(ActionEvent event) {
+
     }
+
+    /*@FXML
+    private Coffee addAddOns() {
+        //if ()
+    }*/
     }
