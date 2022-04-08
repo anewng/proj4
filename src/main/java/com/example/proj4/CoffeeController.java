@@ -5,10 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.CacheHint;
+import javafx.scene.control.*;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CoffeeController {
@@ -20,6 +20,8 @@ public class CoffeeController {
     ObservableList<String> coffeeAmountList = FXCollections
             .observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
+    private double subtotal = 0;
+
     @FXML
     private ComboBox coffeeSizeSelect;
 
@@ -30,10 +32,30 @@ public class CoffeeController {
     private Button addToCart;
 
     @FXML
+    private CheckBox cream, syrup, milk, caramel, whippedCream;
+
+    @FXML
+    private TextField coffeeSubtotal;
+
+    private Coffee coffee = new Coffee();
+
+    @FXML
     private void initialize(){
         coffeeSizeSelect.setItems(coffeeSizeList);
         coffeeAmountSelect.setItems(coffeeAmountList);
 
+    }
+
+    @FXML
+    protected void onCoffeeSizeSelected(ActionEvent event) {
+        coffee.setSize(coffeeSizeSelect.getValue().toString());
+        updateSubtotalAndCoffee();
+    }
+
+    @FXML
+    protected void onCoffeeQuantitySelected(ActionEvent event) {
+        coffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
+        updateSubtotalAndCoffee();
     }
 
     @FXML
@@ -47,8 +69,33 @@ public class CoffeeController {
 
     @FXML
     protected void onAddOnsChecked(ActionEvent event) {
+        updateSubtotalAndCoffee();
+    }
+
+    private void updateSubtotalAndCoffee() {
+        coffee.setSize(coffeeSizeSelect.getValue().toString());
+        if (cream.isSelected()) {
+            coffee.addAddOn("cream");
+        }
+        if (syrup.isSelected()) {
+            coffee.addAddOn("syrup");
+        }
+        if (milk.isSelected()) {
+            coffee.addAddOn("milk");
+        }
+        if (caramel.isSelected()) {
+            coffee.addAddOn("caramel");
+        }
+        if (whippedCream.isSelected()) {
+            coffee.addAddOn("whipped cream");
+        }
+        subtotal = coffee.itemPrice() * coffee.getQuantity();
+        DecimalFormat d = new DecimalFormat("'$'#,##0.00");
+        coffeeSubtotal.setText(d.format(subtotal));
 
     }
+
+
 
     /*@FXML
     private Coffee addAddOns() {

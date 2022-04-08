@@ -1,13 +1,12 @@
 package com.example.proj4;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Coffee extends MenuItem{
     private String size;
     private int addOnCount;
-    private ArrayList<String> addOns;
+    private ArrayList<String> addOns = new ArrayList<String>();
 
     private static final double SHORT_PRICE = 1.69;
     private static final double TALL_PRICE = 2.09;
@@ -29,7 +28,7 @@ public class Coffee extends MenuItem{
         } else {
             return INVALID_CASE;
         }
-        retPrice += this.addOnCount * ADD_IN_PRICE;
+        retPrice += (this.addOnCount * ADD_IN_PRICE);
         return retPrice;
     }
 
@@ -49,10 +48,16 @@ public class Coffee extends MenuItem{
 
     public void addAddOn(String addOn) {
         addOns.add(addOn);
+        addOnCount++;
     }
 
     public void removeAddOn(String addOn) {
         addOns.remove(addOn);
+        addOnCount--;
+    }
+
+    public int getAddOnCount() {
+        return addOnCount;
     }
 
     public ArrayList<String> getAddOns() {
