@@ -24,7 +24,7 @@ public class YeastDonut extends Donut{
     @Override
     public String toString() {
         DecimalFormat d = new DecimalFormat("'$'#,##0.00");
-        return "Yeast Donut, " + flavor + ", " + d.format(itemPrice());
+        return "Yeast Donut, " + getFlavor() + ", " + d.format(itemPrice()) + ", amount: " + getQuantity();
     }
 
 }

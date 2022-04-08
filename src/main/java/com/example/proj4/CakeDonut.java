@@ -23,7 +23,7 @@ public class CakeDonut extends Donut{
     @Override
     public String toString() {
         DecimalFormat d = new DecimalFormat("'$'#,##0.00");
-        return "Cake Donut, "  + flavor + ", " + d.format(itemPrice());
+        return "Cake Donut, " + getFlavor() + ", " + d.format(itemPrice()) + ", amount: " + getQuantity();
     }
 
 }

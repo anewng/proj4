@@ -9,10 +9,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class DonutController {
+    private static final int NOT_FOUND = -1;
+
     //donut type list, so that user can select the type of donut to add to order
     ObservableList<String> donutTypeList = FXCollections
             .observableArrayList("Donut Hole", "Yeast Donut", "Cake Donut");
@@ -36,9 +41,9 @@ public class DonutController {
     @FXML
     private ComboBox donutAmountSelect;
     @FXML
-    private Button addToOrder;
-    @FXML
     private ListView donutOrderPreview;
+    @FXML
+    private TextField donutSubtotal;
 
 
     ArrayList<Donut> donutArrayList = new ArrayList<Donut>();
@@ -70,12 +75,88 @@ public class DonutController {
         } else if(donutTypeSelect.getValue().toString().equals("Cake Donut")) {
             newDonut = new CakeDonut(donutFlavorSelect.getValue().toString());
         }
-        donutArrayList.add(newDonut);
+        newDonut.setQuantity(Integer.parseInt(donutAmountSelect.getValue().toString()));
+        if(findDonutIndex(newDonut) == NOT_FOUND){
+            donutArrayList.add(newDonut);
+        }else{
+            int oldAmount = donutArrayList.get(findDonutIndex(newDonut)).getQuantity();
+            donutArrayList.get(findDonutIndex(newDonut)).setQuantity(oldAmount + newDonut.getQuantity());
+        }
 
+        updateListView();
+        updateSubtotal();
+    }
+
+    private double findDonutSubtotal(){
+        double subtotal = 0;
+        for(int i = 0; i < donutArrayList.size(); i++){
+            subtotal += ( donutArrayList.get(i).price * donutArrayList.get(i).getQuantity() );
+        }
+        return subtotal;
+    }
+
+    private int findDonutIndex(Donut newDonut){
+        for(int i = 0; i < donutArrayList.size(); i++){
+            if(donutArrayList.get(i).flavor.equals(newDonut.flavor)){
+                return i;
+            }
+        }
+        return NOT_FOUND;
+    }
+
+    private int findFlavorIndex(String flavor){
+        for(int i = 0; i < donutArrayList.size(); i++){
+            if(donutArrayList.get(i).flavor.equals(flavor)){
+                return i;
+            }
+        }
+        return NOT_FOUND;
+    }
+
+    @FXML
+    protected void onRemoveSelectedButtonClick(ActionEvent event) {
+        StringTokenizer string = new StringTokenizer(donutOrderPreview.getSelectionModel().getSelectedItem().toString());
+        string.nextToken(); //skipping the first token
+        string.nextToken(); //skipping the second token
+        String thirdToken = string.nextToken();
+
+        String selectedFlavor = setFlavor(thirdToken); //set the flavor based on the third token
+
+        int removalIndex = findFlavorIndex(selectedFlavor);
+        donutArrayList.remove(removalIndex);
+
+        updateListView();
+        updateSubtotal();
+    }
+
+    private void updateListView(){
+        donutOrderPreview.getItems().clear();
+        for(int i = 0; i < donutArrayList.size(); i ++){
+            donutOrderPreview.getItems().add(donutArrayList.get(i));
+        }
+    }
+
+    private void updateSubtotal(){
+        DecimalFormat d = new DecimalFormat("'$'#,##0.00");
+        donutSubtotal.setText(d.format(findDonutSubtotal()));
+    }
+
+    private String setFlavor(String thirdToken){
+        if(thirdToken.equals("E")){
+            return "E coli";
+        } else if (thirdToken.equals("Red")) {
+            return "Red Velvet";
+        } else if (thirdToken.equals("Blueberry")) {
+            return "Blueberry Chiffon";
+        } else if (thirdToken.equals("Raspberry")) {
+            return "Raspberry Jam Swirl";
+        } else {
+            return thirdToken;
+        }
     }
 
     @FXML
     protected void onOrderButtonClick(ActionEvent event) {
-        System.out.println("working");
+
     }
 }

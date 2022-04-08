@@ -25,5 +25,13 @@ public abstract class MenuItem {
         }
     }
 
+    public void setQuantity(int amount){
+        quantity = amount;
+    }
+
+    public int getQuantity(){
+        return quantity;
+    }
+
 
 }

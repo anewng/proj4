@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj4.DonutController">
+<AnchorPane maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj4.DonutController">
    <children>
        <ImageView fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
            <image>
@@ -16,7 +16,7 @@
       <ComboBox fx:id="donutAmountSelect" layoutX="27.0" layoutY="282.0" prefWidth="150.0" />
       <Button fx:id="addToOrder" layoutX="55.0" layoutY="317.0" mnemonicParsing="false" onAction="#onAddToOrderClick" prefHeight="25.0" prefWidth="94.0" text="add to order" />
       <ListView fx:id="donutOrderPreview" layoutX="200.0" layoutY="119.0" prefHeight="181.0" prefWidth="168.0" />
-      <TextArea layoutX="138.0" layoutY="352.0" minHeight="25.0" prefHeight="25.0" prefWidth="124.0" />
-      <Button fx:id="removeSelected" layoutX="202.0" layoutY="317.0" mnemonicParsing="false" text="remove selected from order" />
+      <Button fx:id="removeSelected" layoutX="202.0" layoutY="317.0" mnemonicParsing="false" onAction="#onRemoveSelectedButtonClick" text="remove selected from order" />
+      <TextField fx:id="donutSubtotal" layoutX="143.0" layoutY="355.0" prefHeight="25.0" prefWidth="133.0" />
    </children>
 </AnchorPane>

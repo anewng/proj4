@@ -23,6 +23,6 @@ public class DonutHole extends Donut{
     @Override
     public String toString() {
         DecimalFormat d = new DecimalFormat("'$'#,##0.00");
-        return "Donut Hole, " + flavor + ", " + d.format(itemPrice());
+        return "Donut Hole, " + getFlavor() + ", " + d.format(itemPrice()) + ", amount: " + getQuantity();
     }
 }
