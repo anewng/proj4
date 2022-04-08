@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController {
+    private String testing = "hi";
     public Stage stage;
 
     @FXML
@@ -26,11 +27,13 @@ public class MainController {
         try {
             FXMLLoader orderFXMLLoader = new FXMLLoader(getClass().getResource("order-view.fxml"));
             orderViewController = orderFXMLLoader.getController();
+            System.out.println(orderViewController.test);
             orderViewController.setMainController(this);
+
         } catch(Exception e) {
             e.printStackTrace();
         }
-
+/*
         try {
             FXMLLoader storeOrderFXMLLoader = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
             storeOrderViewController = storeOrderFXMLLoader.getController();

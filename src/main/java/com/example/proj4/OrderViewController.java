@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class OrderViewController {
+    public String test = "hi";
 
     private DonutController donutController;
     private CoffeeController coffeeController;
