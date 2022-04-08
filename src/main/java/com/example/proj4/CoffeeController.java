@@ -29,9 +29,6 @@ public class CoffeeController {
     @FXML
     private Button addToCart;
 
-
-    ArrayList<Coffee> coffeeArrayList = new ArrayList<Coffee>();
-
     @FXML
     private void initialize(){
         coffeeSizeSelect.setItems(coffeeSizeList);
@@ -44,7 +41,12 @@ public class CoffeeController {
         Coffee newCoffee = new Coffee();
         newCoffee.setSize(coffeeSizeSelect.getValue().toString());
         newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
-        coffeeArrayList.add(newCoffee);
 
+        //ADD THE COFFEE!
+    }
+
+    @FXML
+    private Coffee addAddOns() {
+        if ()
     }
     }

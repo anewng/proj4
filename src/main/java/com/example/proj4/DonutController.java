@@ -68,7 +68,7 @@ public class DonutController {
     @FXML
     protected void onAddToOrderClick(ActionEvent event) {
         Donut newDonut = new DonutHole("");
-        if(donutTypeSelect.getValue().toString().equals("Donut Hole")) {
+        if (donutTypeSelect.getValue().toString().equals("Donut Hole")) {
             newDonut = new DonutHole(donutFlavorSelect.getValue().toString());
         } else if(donutTypeSelect.getValue().toString().equals("Yeast Donut")) {
             newDonut = new YeastDonut(donutFlavorSelect.getValue().toString());
@@ -76,9 +76,9 @@ public class DonutController {
             newDonut = new CakeDonut(donutFlavorSelect.getValue().toString());
         }
         newDonut.setQuantity(Integer.parseInt(donutAmountSelect.getValue().toString()));
-        if(findDonutIndex(newDonut) == NOT_FOUND){
+        if (findDonutIndex(newDonut) == NOT_FOUND){
             donutArrayList.add(newDonut);
-        }else{
+        } else {
             int oldAmount = donutArrayList.get(findDonutIndex(newDonut)).getQuantity();
             donutArrayList.get(findDonutIndex(newDonut)).setQuantity(oldAmount + newDonut.getQuantity());
         }
