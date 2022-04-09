@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -58,6 +59,7 @@ public class MainController {
         try {
             Stage stage = new Stage();
             stage.setScene(donutViewScene);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
@@ -69,6 +71,7 @@ public class MainController {
         try {
             Stage stage = new Stage();
             stage.setScene(coffeeViewScene);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
@@ -82,6 +85,7 @@ public class MainController {
             stage.setScene(orderViewScene);
             orderViewController.updateListView();
             orderViewController.updateTotals();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
@@ -94,6 +98,7 @@ public class MainController {
             Stage stage = new Stage();
             stage.setScene(storeOrderViewScene);
             //storeOrderViewController.updateListView();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
