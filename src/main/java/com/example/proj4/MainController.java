@@ -20,15 +20,23 @@ public class MainController {
     private FXMLLoader coffeeLoader;
     private FXMLLoader orderViewLoader;
     private FXMLLoader storeOrderLoader;
-    private Parent donutViewRoot;
-    private Parent coffeeViewRoot;
-    private Parent orderViewRoot;
-    private Parent storeViewRoot;
+    private Scene donutViewScene;
+    private Scene coffeeViewScene;
     private Scene orderViewScene;
     private Scene storeOrderViewScene;
 
     @FXML
     private void initialize() throws IOException {
+        donutLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
+        donutLoader.load();
+        donutController = donutLoader.getController();
+        donutViewScene = new Scene(donutLoader.getRoot());
+
+        coffeeLoader = new FXMLLoader(getClass().getResource("coffee-view.fxml"));
+        coffeeLoader.load();
+        coffeeController = coffeeLoader.getController();
+        coffeeViewScene = new Scene(coffeeLoader.getRoot());
+
         orderViewLoader = new FXMLLoader(getClass().getResource("order-view.fxml"));
         orderViewLoader.load();
         orderViewController = orderViewLoader.getController();
@@ -39,25 +47,15 @@ public class MainController {
         storeOrderViewController = storeOrderLoader.getController();
         storeOrderViewScene = new Scene(storeOrderLoader.getRoot());
 
-        donutLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
-        donutLoader.load();
-        donutController = donutLoader.getController();
         donutController.setOrderViewController(this.orderViewController);
-        storeOrderViewScene = new Scene(storeOrderLoader.getRoot());
 
-
-        FXMLLoader loader4 = new FXMLLoader(getClass().getResource("coffee-view.fxml"));
-        loader4.load();
-        CoffeeController coffeeController = loader4.getController();
-        coffeeController.setMainController(this);
     }
 
     @FXML
     protected void onDonutButtonClick(ActionEvent event) throws IOException {
-
         try {
             Stage stage = new Stage();
-            stage.setScene(new Scene(donutLoader.getRoot()));
+            stage.setScene(donutViewScene);
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
@@ -67,10 +65,8 @@ public class MainController {
     @FXML
     protected void onCoffeeButtonClick(ActionEvent event) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("coffee-view.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
+            stage.setScene(coffeeViewScene);
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
@@ -92,10 +88,9 @@ public class MainController {
     @FXML
     protected void onStoreOrderButtonClick(ActionEvent event) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
+            stage.setScene(storeOrderViewScene);
+            //storeOrderViewController.updateListView();
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
