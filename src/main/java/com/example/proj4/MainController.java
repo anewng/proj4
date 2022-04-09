@@ -48,6 +48,7 @@ public class MainController {
         storeOrderViewScene = new Scene(storeOrderLoader.getRoot());
 
         donutController.setOrderViewController(this.orderViewController);
+        coffeeController.setOrderViewController(this.orderViewController);
 
     }
 
@@ -79,6 +80,7 @@ public class MainController {
             Stage stage = new Stage();
             stage.setScene(orderViewScene);
             orderViewController.updateListView();
+            orderViewController.updateTotals();
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();

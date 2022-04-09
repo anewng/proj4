@@ -164,7 +164,6 @@ public class DonutController {
     protected void onAddToOrderButtonClick(ActionEvent event) throws IOException {
         for (int i = 0; i < donutArrayList.size(); i++) {
             orderViewController.yourOrderArrayList.add(donutArrayList.get(i));
-            System.out.println(orderViewController.yourOrderArrayList.get(0).toString());
         }
     }
 

@@ -3,13 +3,10 @@ package com.example.proj4;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.CacheHint;
 import javafx.scene.control.*;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class CoffeeController {
     //coffee size list, so that user can select the size of coffee to add to order
@@ -21,7 +18,7 @@ public class CoffeeController {
             .observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
     private double subtotal = 0;
-    private MainController mainController;
+    private OrderViewController orderViewController;
 
     @FXML
     private ComboBox coffeeSizeSelect;
@@ -64,8 +61,8 @@ public class CoffeeController {
         Coffee newCoffee = new Coffee();
         newCoffee.setSize(coffeeSizeSelect.getValue().toString());
         newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
+        orderViewController.yourOrderArrayList.add(newCoffee);
 
-        //ADD THE COFFEE!
     }
 
     @FXML
@@ -95,14 +92,8 @@ public class CoffeeController {
         coffeeSubtotal.setText(d.format(subtotal));
 
     }
-    public void setMainController(MainController controller) {
-        mainController = controller;
+    public void setOrderViewController(OrderViewController controller) {
+        orderViewController = controller;
     }
 
-
-
-    /*@FXML
-    private Coffee addAddOns() {
-        //if ()
-    }*/
     }
