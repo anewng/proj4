@@ -14,8 +14,6 @@ public class Coffee extends MenuItem implements Customizable{
     private int addOnCount;
     private ArrayList<String> addOns = new ArrayList<String>();
 
-    private boolean cream = false, syrup = false, milk = false, caramel = false, whippedCream = false;
-
     @Override
     public double itemPrice() {
         double retPrice = 0;
@@ -48,7 +46,7 @@ public class Coffee extends MenuItem implements Customizable{
         if(addOnCount != 0){
             coffeeString += ", add-ons: ";
         }
-        for(int i = 0; i < addOnCount - 1; i++){
+        for(int i = 0; i < addOnCount; i++){
             coffeeString += addOns.get(i) + " ";
         }
         return coffeeString;

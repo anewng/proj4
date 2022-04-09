@@ -150,9 +150,10 @@ public class DonutController {
             String thirdToken = string.nextToken();
 
             String selectedFlavor = setFlavor(thirdToken); //set the flavor based on the third token
+            System.out.println(selectedFlavor);
             int removalIndex = findFlavorIndex(selectedFlavor);
 
-            donutArrayList.remove(removalIndex);
+            donutArrayList.getOrderArray().remove(removalIndex);
 
             updateListView();
             updateSubtotal();
