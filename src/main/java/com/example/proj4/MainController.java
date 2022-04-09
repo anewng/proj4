@@ -49,6 +49,7 @@ public class MainController {
 
         donutController.setOrderViewController(this.orderViewController);
         coffeeController.setOrderViewController(this.orderViewController);
+        orderViewController.setStoreOrderViewController(this.storeOrderViewController);
 
     }
 

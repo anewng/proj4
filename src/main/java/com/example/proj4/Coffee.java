@@ -42,8 +42,7 @@ public class Coffee extends MenuItem{
 
     @Override
     public String toString() {
-        DecimalFormat d = new DecimalFormat("'$'#,##0.00");
-        return "Coffee, " + size + ", " + d.format(itemPrice());
+        return "Coffee, " + size + " (" + getQuantity() + ")";
     }
 
     public void addAddOn(String addOn) {
