@@ -3,10 +3,13 @@ package com.example.proj4;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.CacheHint;
 import javafx.scene.control.*;
-import java.text.DecimalFormat;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class CoffeeController {
     //coffee size list, so that user can select the size of coffee to add to order
@@ -61,8 +64,8 @@ public class CoffeeController {
         Coffee newCoffee = new Coffee();
         newCoffee.setSize(coffeeSizeSelect.getValue().toString());
         newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
-        mainController.orderViewController.getYourOrderArrayList().add(newCoffee);
 
+        //ADD THE COFFEE!
     }
 
     @FXML
@@ -95,6 +98,7 @@ public class CoffeeController {
     public void setMainController(MainController controller) {
         mainController = controller;
     }
+
 
 
     /*@FXML

@@ -1,19 +1,15 @@
 package com.example.proj4;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableIntegerArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -58,10 +54,10 @@ public class DonutController {
     private void initialize() throws IOException {
         donutTypeSelect.setItems(donutTypeList);
         donutAmountSelect.setItems(donutAmountList);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("order-view.fxml"));
+        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("order-view.fxml"));
         loader.load();
         orderViewController = loader.getController();
-        orderViewController.setDonutController(this);
+        orderViewController.setDonutController(this);*/
     }
 
     @FXML
@@ -166,9 +162,13 @@ public class DonutController {
 
     @FXML
     protected void onAddToOrderButtonClick(ActionEvent event) throws IOException {
-        System.out.println("Slay");
         for (int i = 0; i < donutArrayList.size(); i++) {
-            orderViewController.getYourOrderArrayList().add(donutArrayList.get(i));
+            orderViewController.yourOrderArrayList.add(donutArrayList.get(i));
+            System.out.println(orderViewController.yourOrderArrayList.get(0).toString());
         }
+    }
+
+    public void setOrderViewController(OrderViewController controller) {
+        orderViewController = controller;
     }
 }

@@ -5,47 +5,45 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainController {
-    private String testing = "hi";
-    public Stage orderViewStage;
-
-    @FXML
-    public OrderViewController orderViewController;
-    @FXML
-    public StoreOrderViewController storeOrderViewController;
-    @FXML
-    public DonutController donutController;
-    @FXML
-    public CoffeeController coffeeController;
+    private OrderViewController orderViewController;
+    private DonutController donutController;
+    private FXMLLoader orderViewLoader;
+    private Parent orderViewRoot;
+    private FXMLLoader donutLoader;
 
     @FXML
     private void initialize() throws IOException {
-        try {
-            FXMLLoader orderFXMLLoader = new FXMLLoader(getClass().getResource("order-view.fxml"));
-            Parent orderViewRoot = orderFXMLLoader.load();
-            orderViewStage = new Stage();
-            orderViewStage.setScene(new Scene(orderViewRoot));
-            System.out.println("is this working");
-
-            orderViewController.setMainController(this);
-            orderViewController.setRoot(orderViewRoot);
-            //orderViewController = orderFXMLLoader.getController();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        orderViewLoader = new FXMLLoader(getClass().getResource("order-view.fxml"));
+        orderViewLoader.load();
+        orderViewController = orderViewLoader.getController();
+        //orderViewController.setMainController(this);
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
+        loader2.load();
+        StoreOrderViewController storeOrderViewController = loader2.getController();
+        storeOrderViewController.setMainController(this);
+        donutLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
+        donutLoader.load();
+        donutController = donutLoader.getController();
+        donutController.setOrderViewController(this.orderViewController);
+        FXMLLoader loader4 = new FXMLLoader(getClass().getResource("coffee-view.fxml"));
+        loader4.load();
+        CoffeeController coffeeController = loader4.getController();
+        coffeeController.setMainController(this);
     }
 
     @FXML
     protected void onDonutButtonClick(ActionEvent event) throws IOException {
+
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
-            Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
+            stage.setScene(new Scene(donutLoader.getRoot()));
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
@@ -56,7 +54,7 @@ public class MainController {
     protected void onCoffeeButtonClick(ActionEvent event) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("coffee-view.fxml"));
-            Parent root1 = fxmlLoader.load();
+            Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.show();
@@ -67,14 +65,20 @@ public class MainController {
 
     @FXML
     protected void onYourOrderButtonClick(ActionEvent event) throws IOException {
-        orderViewStage.show();
+        try {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(orderViewLoader.getRoot()));
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     protected void onStoreOrderButtonClick(ActionEvent event) throws IOException {
         try {
-            FXMLLoader storeOrderFXMLLoader = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
-            Parent root1 = storeOrderFXMLLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.show();
@@ -82,5 +86,4 @@ public class MainController {
             e.printStackTrace();
         }
     }
-
 }

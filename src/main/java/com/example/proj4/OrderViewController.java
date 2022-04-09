@@ -9,11 +9,14 @@ import java.util.ArrayList;
 
 public class OrderViewController {
     private DonutController donutController;
-    private ArrayList<MenuItem> yourOrderArrayList = new ArrayList<MenuItem>();
+    public ArrayList<MenuItem> yourOrderArrayList = new ArrayList<MenuItem>();
     @FXML
     private ListView yourOrders;
     @FXML
     private void initialize() throws IOException {
+        System.out.println("Slay");
+        DonutHole donut = new DonutHole("Slay");
+        yourOrders.getItems().add(donut);
         updateListView();
     }
     private void updateListView(){
