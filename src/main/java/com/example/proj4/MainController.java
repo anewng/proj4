@@ -25,6 +25,7 @@ public class MainController {
     private Parent orderViewRoot;
     private Parent storeViewRoot;
     private Scene orderViewScene;
+    private Scene storeOrderViewScene;
 
     @FXML
     private void initialize() throws IOException {
@@ -32,15 +33,19 @@ public class MainController {
         orderViewLoader.load();
         orderViewController = orderViewLoader.getController();
         orderViewScene = new Scene(orderViewLoader.getRoot());
-        //orderViewController.setMainController(this);
-        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
-        loader2.load();
-        StoreOrderViewController storeOrderViewController = loader2.getController();
-        storeOrderViewController.setMainController(this);
+
+        storeOrderLoader = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
+        storeOrderLoader.load();
+        storeOrderViewController = storeOrderLoader.getController();
+        storeOrderViewScene = new Scene(storeOrderLoader.getRoot());
+
         donutLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
         donutLoader.load();
         donutController = donutLoader.getController();
         donutController.setOrderViewController(this.orderViewController);
+        storeOrderViewScene = new Scene(storeOrderLoader.getRoot());
+
+
         FXMLLoader loader4 = new FXMLLoader(getClass().getResource("coffee-view.fxml"));
         loader4.load();
         CoffeeController coffeeController = loader4.getController();
