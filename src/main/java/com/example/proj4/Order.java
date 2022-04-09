@@ -1,6 +1,6 @@
 package com.example.proj4;
 
-import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Order implements Customizable {
@@ -21,6 +21,15 @@ public class Order implements Customizable {
 
     public ArrayList<MenuItem> getOrderArray(){
         return order;
+    }
+
+    public double getSubtotal(){
+        double subtotal = 0;
+        for (int i = 0; i < order.size(); i++) {
+            subtotal += order.get(i).itemPrice()
+                    * order.get(i).getQuantity();
+        }
+        return subtotal;
     }
 
     @Override

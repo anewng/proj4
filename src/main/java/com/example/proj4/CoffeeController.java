@@ -3,14 +3,19 @@ package com.example.proj4;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.text.DecimalFormat;
+import java.util.Optional;
 
 public class CoffeeController {
 
     private double subtotal = 0;
     private OrderViewController orderViewController;
 
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     public ComboBox coffeeSizeSelect;
     @FXML
@@ -45,21 +50,41 @@ public class CoffeeController {
 
     @FXML
     protected void onAddToCartButtonClick(ActionEvent event) {
-        Coffee newCoffee = new Coffee();
-        newCoffee.setSize(coffeeSizeSelect.getValue().toString());
-        newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
-        trackAddOns(newCoffee);
+        if (coffeeSizeSelect.getValue() == null) {
+            Alert error = new Alert(Alert.AlertType.NONE);
+            error.setAlertType(Alert.AlertType.ERROR);
+            error.setContentText("No size selected");
+            error.show();
+        } else if (coffeeAmountSelect.getValue() == null) {
+            Alert error = new Alert(Alert.AlertType.NONE);
+            error.setAlertType(Alert.AlertType.ERROR);
+            error.setContentText("No amount selected");
+            error.show();
+        } else {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setContentText("Confirm order addition");
+            Optional<ButtonType> result = confirmation.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                Coffee newCoffee = new Coffee();
+                newCoffee.setSize(coffeeSizeSelect.getValue().toString());
+                newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
+                trackAddOns(newCoffee);
 
-        orderViewController.yourOrderArrayList.getOrderArray().add(newCoffee);
+                orderViewController.yourOrderArrayList.getOrderArray().add(newCoffee);
 
-        coffeeSizeSelect.setValue(null);
-        coffeeAmountSelect.setValue(null);
-        coffeeSubtotal.clear();
-        cream.setSelected(false);
-        syrup.setSelected(false);
-        milk.setSelected(false);
-        caramel.setSelected(false);
-        whippedCream.setSelected(false);
+                coffeeSizeSelect.setValue(null);
+                coffeeAmountSelect.setValue(null);
+                coffeeSubtotal.clear();
+                cream.setSelected(false);
+                syrup.setSelected(false);
+                milk.setSelected(false);
+                caramel.setSelected(false);
+                whippedCream.setSelected(false);
+
+                Stage stage = (Stage) anchorPane.getScene().getWindow();
+                stage.close();
+            }
+        }
     }
 
     @FXML

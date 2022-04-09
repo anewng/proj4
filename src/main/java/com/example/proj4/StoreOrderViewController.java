@@ -6,11 +6,18 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.file.attribute.AclEntryType;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class StoreOrderViewController {
     private static final double SALES_TAX = 0.06625;
@@ -20,7 +27,8 @@ public class StoreOrderViewController {
 
     ObservableList<String> orderNumbersList = FXCollections
             .observableArrayList();
-
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private ListView storeOrders;
     @FXML
@@ -86,13 +94,20 @@ public class StoreOrderViewController {
 
     @FXML
     protected void onCancelOrderButtonClick(ActionEvent event) {
-        storeOrders.getItems().clear();
-        total.clear();
-        selectedOrderList = findSelectedOrder(Integer.parseInt(orderNumber.getValue().toString()));
-        storeOrderArrayList.remove(selectedOrderList);
-        selectedOrderList = null;
-        resetComboBox();
-        updateTotalField();
+        if (storeOrders.getSelectionModel().getSelectedItem() == null) {
+            Alert error = new Alert(Alert.AlertType.NONE);
+            error.setAlertType(Alert.AlertType.ERROR);
+            error.setContentText("No order selected");
+            error.show();
+        } else {
+            storeOrders.getItems().clear();
+            total.clear();
+            selectedOrderList = findSelectedOrder(Integer.parseInt(orderNumber.getValue().toString()));
+            storeOrderArrayList.remove(selectedOrderList);
+            selectedOrderList = null;
+            resetComboBox();
+            updateTotalField();
+        }
     }
 
     private void resetComboBox(){
@@ -104,8 +119,48 @@ public class StoreOrderViewController {
     }
 
     @FXML
-    protected void onExportOrderButtonClick(ActionEvent event) {
+    protected void onExportOrderButtonClick(ActionEvent event) throws IOException {
+        if (storeOrderArrayList.size() == 0) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setContentText("No orders to export");
+            error.show();
+        } else {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setContentText("Export Orders?");
+            Optional<ButtonType> result = confirmation.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                FileChooser chooser = new FileChooser();
+                chooser.setTitle("Open Target File for the Export");
+                chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                        new FileChooser.ExtensionFilter("All Files", "*.*"));
+                Stage stage = new Stage();
+                File targetFile = chooser.showSaveDialog(stage); //get the reference of the target file
+                //write code to write to the file.
+                FileWriter fileWriter = new FileWriter(targetFile);
+                for (int i = 0; i < storeOrderArrayList.size(); i++) {
+                    fileWriter.write("Order #" + storeOrderArrayList.get(i).getOrderNumber() + ":\n");
+                    for (int j = 0; j < storeOrderArrayList.get(i).getOrderArray().size(); j++) {
+                        fileWriter.write("- " + storeOrderArrayList.get(i).getOrderArray().get(j).toString() + "\n");
+                    }
+                    double subtotalDouble = storeOrderArrayList.get(i).getSubtotal();
+                    DecimalFormat d = new DecimalFormat("'$'#,##0.00");
+                    String subtotalString = d.format(subtotalDouble);
+                    fileWriter.write("Subtotal: " + subtotalString + "\n");
 
+                    double taxDouble = subtotalDouble * SALES_TAX;
+                    String taxString = d.format(taxDouble);
+                    fileWriter.write("Sales tax: " + taxString + "\n");
+
+                    double totalDouble = subtotalDouble + taxDouble;
+                    String totalString = d.format(totalDouble);
+                    fileWriter.write("Total: " + totalString + "\n\n");
+                }
+                fileWriter.close();
+                //make sure to clear storeOrderView
+                Stage mainStage = (Stage) anchorPane.getScene().getWindow();
+                mainStage.close();
+            }
+        }
     }
 
 }
