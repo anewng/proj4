@@ -22,16 +22,10 @@ public class CoffeeController {
 
     @FXML
     private ComboBox coffeeSizeSelect;
-
     @FXML
     private ComboBox coffeeAmountSelect;
-
-    @FXML
-    private Button addToCart;
-
     @FXML
     private CheckBox cream, syrup, milk, caramel, whippedCream;
-
     @FXML
     private TextField coffeeSubtotal;
 
@@ -62,6 +56,15 @@ public class CoffeeController {
         newCoffee.setSize(coffeeSizeSelect.getValue().toString());
         newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
         orderViewController.yourOrderArrayList.add(newCoffee);
+
+        coffeeSizeSelect.getItems().clear();
+        coffeeAmountSelect.getItems().clear();
+        coffeeSubtotal.clear();
+        cream.setSelected(false);
+        syrup.setSelected(false);
+        milk.setSelected(false);
+        caramel.setSelected(false);
+        whippedCream.setSelected(false);
 
     }
 

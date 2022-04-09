@@ -50,18 +50,5 @@ public class Coffee extends MenuItem{
         addOnCount++;
     }
 
-    public void removeAddOn(String addOn) {
-        addOns.remove(addOn);
-        addOnCount--;
-    }
-
-    public int getAddOnCount() {
-        return addOnCount;
-    }
-
-    public ArrayList<String> getAddOns() {
-        return addOns;
-    }
-
 
 }

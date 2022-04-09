@@ -124,7 +124,9 @@ public class DonutController {
 
         String selectedFlavor = setFlavor(thirdToken); //set the flavor based on the third token
         int removalIndex = findFlavorIndex(selectedFlavor);
-        donutArrayList.remove(removalIndex); //fix this w/ new string format
+
+        donutArrayList.remove(removalIndex);
+        System.out.println(removalIndex);
 
         updateListView();
         updateSubtotal();
@@ -152,7 +154,7 @@ public class DonutController {
         } else if (thirdToken.equals("Raspberry")) {
             return "Raspberry Jam Swirl";
         } else {
-            return thirdToken.substring(0,thirdToken.length()-1);
+            return thirdToken;
         }
     }
 
@@ -161,6 +163,11 @@ public class DonutController {
         for (int i = 0; i < donutArrayList.size(); i++) {
             orderViewController.yourOrderArrayList.add(donutArrayList.get(i));
         }
+        donutFlavorSelect.getItems().clear();
+        donutAmountSelect.getItems().clear();
+        donutAmountSelect.getItems().clear();
+        donutOrderPreview.getItems().clear();
+        donutSubtotal.clear();
     }
 
     public void setOrderViewController(OrderViewController controller) {
