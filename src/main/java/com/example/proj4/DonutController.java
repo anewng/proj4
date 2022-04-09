@@ -23,6 +23,10 @@ public class DonutController {
     ObservableList<String> donutTypeList = FXCollections
             .observableArrayList("Donut Hole", "Yeast Donut", "Cake Donut");
 
+    //quantity list, so that user can select the number of donuts to add to order
+    ObservableList<String> donutAmountList = FXCollections
+            .observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+
     //flavor lists depending on the type of donut
     ObservableList<String> flavorsDonutHoleList = FXCollections
             .observableArrayList("Yas", "Slay", "Purr");
@@ -31,16 +35,12 @@ public class DonutController {
     ObservableList<String> flavorsCakeDonutList = FXCollections
             .observableArrayList("Red Velvet", "Blueberry Chiffon", "Raspberry Jam Swirl");
 
-    //quantity list, so that user can select the number of donuts to add to order
-    ObservableList<String> donutAmountList = FXCollections
-            .observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
-
     @FXML
-    private ComboBox donutTypeSelect;
+    public ComboBox donutTypeSelect;
     @FXML
-    private ComboBox donutFlavorSelect;
+    public ComboBox donutFlavorSelect;
     @FXML
-    private ComboBox donutAmountSelect;
+    public ComboBox donutAmountSelect;
     @FXML
     private ListView donutOrderPreview;
     @FXML
@@ -52,11 +52,12 @@ public class DonutController {
     private void initialize() throws IOException {
         donutTypeSelect.setItems(donutTypeList);
         donutAmountSelect.setItems(donutAmountList);
+
         donutSubtotal.setEditable(false);
     }
 
     @FXML
-    protected void onDonutTypeSelected(Event itemStateChanged) {
+    private void onDonutTypeSelected(Event itemStateChanged) {
         if(donutTypeSelect.getValue() == null){
             return;
         }
@@ -165,14 +166,14 @@ public class DonutController {
         for (int i = 0; i < donutArrayList.size(); i++) {
             orderViewController.yourOrderArrayList.add(donutArrayList.get(i));
         }
-        donutTypeSelect.getItems().clear();
-        donutFlavorSelect.getItems().clear();
-        donutAmountSelect.getItems().clear();
-        donutAmountSelect.getItems().clear();
+        donutTypeSelect.setValue(null);
+        donutFlavorSelect.setValue(null);
+        donutAmountSelect.setValue(null);
+        donutAmountSelect.setValue(null);
         donutOrderPreview.getItems().clear();
         donutSubtotal.clear();
-        donutTypeSelect.setItems(donutTypeList);
-        donutAmountSelect.setItems(donutAmountList);
+
+        donutArrayList = new ArrayList<Donut>();
     }
 
     public void setOrderViewController(OrderViewController controller) {

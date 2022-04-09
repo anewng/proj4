@@ -16,4 +16,9 @@ public abstract class Donut extends MenuItem {
 
     @Override
     public abstract String toString();
+
+    @Override
+    public double itemPrice() {
+        return price;
+    }
 }

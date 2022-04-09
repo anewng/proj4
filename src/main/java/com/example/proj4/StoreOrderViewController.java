@@ -9,11 +9,14 @@ import javafx.scene.control.*;
 
 import java.lang.reflect.Array;
 import java.nio.file.attribute.AclEntryType;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class StoreOrderViewController {
+    private static final double SALES_TAX = 0.06625;
 
-    public ArrayList<ArrayList<MenuItem>> storeOrderArrayList = new ArrayList<ArrayList<MenuItem>>();
+    public ArrayList<Order> storeOrderArrayList = new ArrayList<Order>();
+    public ArrayList<MenuItem> selectedOrderList = new ArrayList<MenuItem>();
 
     ObservableList<String> orderNumbersList = FXCollections
             .observableArrayList();
@@ -29,7 +32,7 @@ public class StoreOrderViewController {
     public void initialize(){
         total.setEditable(false);
 
-        //seting the order combobox options
+        //setting the order combobox options
         for(int i = 0; i < storeOrderArrayList.size(); i++) {
             orderNumbersList.add(String.valueOf(i+1));
         }
@@ -39,22 +42,45 @@ public class StoreOrderViewController {
     @FXML
     public void onOrderNumberSelected(Event itemStateChanged){
         updateListView();
+        updateTotalField();
     }
 
     @FXML
     public void updateListView(){
         storeOrders.getItems().clear();
+        if(orderNumber.getValue() == null){
+            return;
+        }
         int selectedOrderIndex = Integer.parseInt(orderNumber.getValue().toString()) - 1;
-        ArrayList<MenuItem> selectedOrder = storeOrderArrayList.get(selectedOrderIndex);
+        selectedOrderList = storeOrderArrayList.get(selectedOrderIndex);
 
-        for(int i = 0; i < selectedOrder.size(); i ++){
-            storeOrders.getItems().add(selectedOrder.get(i).toString());
+        for(int i = 0; i < selectedOrderList.size(); i ++){
+            storeOrders.getItems().add(selectedOrderList.get(i).toString());
         }
     }
 
     @FXML
-    protected void onCancelOrderButtonClick(ActionEvent event) {
+    public void updateTotalField(){
+        total.clear();
+        double totalDouble = 0;
+        for(int i = 0; i < selectedOrderList.size(); i++){
+            totalDouble += selectedOrderList.get(i).itemPrice() * selectedOrderList.get(i).getQuantity();
+        }
+        double taxDouble = totalDouble * SALES_TAX;
+        totalDouble = totalDouble + taxDouble;
 
+        DecimalFormat d = new DecimalFormat("'$'#,##0.00");
+        String totalString = d.format(totalDouble);
+        total.setText(totalString);
+    }
+
+    @FXML
+    protected void onCancelOrderButtonClick(ActionEvent event) {
+        storeOrders.getItems().clear();
+        total.clear();
+        storeOrderArrayList.set(Integer.parseInt(orderNumber.getValue().toString()) - 1, null);
+        orderNumbersList.remove(Integer.parseInt(orderNumber.getValue().toString()) - 1);
+        orderNumber.setItems(orderNumbersList);
     }
 
     @FXML

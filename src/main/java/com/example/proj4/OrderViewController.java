@@ -57,7 +57,10 @@ public class OrderViewController {
 
     @FXML
     protected void onPlaceOrderButtonClick(ActionEvent event) {
-        storeOrderViewController.storeOrderArrayList.add(yourOrderArrayList);
+        Order newOrder = new Order(yourOrderArrayList);
+        storeOrderViewController.storeOrderArrayList.add(newOrder);
+        yourOrderArrayList = new ArrayList<MenuItem>();
+
         yourOrders.getItems().clear();
         subTotal.clear();
         salesTax.clear();

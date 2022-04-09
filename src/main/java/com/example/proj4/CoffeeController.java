@@ -9,21 +9,14 @@ import javafx.scene.control.*;
 import java.text.DecimalFormat;
 
 public class CoffeeController {
-    //coffee size list, so that user can select the size of coffee to add to order
-    ObservableList<String> coffeeSizeList = FXCollections
-            .observableArrayList("Short", "Tall", "Grande", "Venti");
-
-    //quantity list, so that user can select the number of donuts to add to order
-    ObservableList<String> coffeeAmountList = FXCollections
-            .observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
     private double subtotal = 0;
     private OrderViewController orderViewController;
 
     @FXML
-    private ComboBox coffeeSizeSelect;
+    public ComboBox coffeeSizeSelect;
     @FXML
-    private ComboBox coffeeAmountSelect;
+    public ComboBox coffeeAmountSelect;
     @FXML
     private CheckBox cream, syrup, milk, caramel, whippedCream;
     @FXML
@@ -33,8 +26,6 @@ public class CoffeeController {
 
     @FXML
     private void initialize(){
-        coffeeSizeSelect.setItems(coffeeSizeList);
-        coffeeAmountSelect.setItems(coffeeAmountList);
         coffeeSubtotal.setEditable(false);
     }
 
@@ -63,17 +54,14 @@ public class CoffeeController {
                 caramel.isSelected(), whippedCream.isSelected());
         orderViewController.yourOrderArrayList.add(newCoffee);
 
-        coffeeSizeSelect.getItems().clear();
-        coffeeAmountSelect.getItems().clear();
+        coffeeSizeSelect.setValue(null);
+        coffeeAmountSelect.setValue(null);
         coffeeSubtotal.clear();
         cream.setSelected(false);
         syrup.setSelected(false);
         milk.setSelected(false);
         caramel.setSelected(false);
         whippedCream.setSelected(false);
-
-        coffeeSizeSelect.setItems(coffeeSizeList);
-        coffeeAmountSelect.setItems(coffeeAmountList);
     }
 
     @FXML
