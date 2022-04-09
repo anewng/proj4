@@ -2,18 +2,16 @@ package com.example.proj4;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class OrderViewController {
     private StoreOrderViewController storeOrderViewController;
+
     private static final double SALES_TAX = 0.06625;
     private static final int AUTOMATIC_REMOVAL_INDEX = -1;
 
@@ -24,6 +22,12 @@ public class OrderViewController {
     @FXML
     private TextField subTotal, salesTax, total;
 
+    @FXML
+    public void initialize(){
+        subTotal.setEditable(false);
+        salesTax.setEditable(false);
+        total.setEditable(false);
+    }
 
     @FXML
     public void updateListView(){
@@ -54,6 +58,10 @@ public class OrderViewController {
     @FXML
     protected void onPlaceOrderButtonClick(ActionEvent event) {
         storeOrderViewController.storeOrderArrayList.add(yourOrderArrayList);
+        yourOrders.getItems().clear();
+        subTotal.clear();
+        salesTax.clear();
+        total.clear();
     }
 
     @FXML
@@ -115,6 +123,5 @@ public class OrderViewController {
     public void setStoreOrderViewController(StoreOrderViewController controller) {
         storeOrderViewController = controller;
     }
-
 
 }

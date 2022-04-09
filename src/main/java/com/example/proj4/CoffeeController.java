@@ -35,7 +35,7 @@ public class CoffeeController {
     private void initialize(){
         coffeeSizeSelect.setItems(coffeeSizeList);
         coffeeAmountSelect.setItems(coffeeAmountList);
-
+        coffeeSubtotal.setEditable(false);
     }
 
     @FXML
@@ -59,6 +59,8 @@ public class CoffeeController {
         Coffee newCoffee = new Coffee();
         newCoffee.setSize(coffeeSizeSelect.getValue().toString());
         newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
+        newCoffee.setAddOns(cream.isSelected(), syrup.isSelected(), milk.isSelected(),
+                caramel.isSelected(), whippedCream.isSelected());
         orderViewController.yourOrderArrayList.add(newCoffee);
 
         coffeeSizeSelect.getItems().clear();
@@ -70,6 +72,8 @@ public class CoffeeController {
         caramel.setSelected(false);
         whippedCream.setSelected(false);
 
+        coffeeSizeSelect.setItems(coffeeSizeList);
+        coffeeAmountSelect.setItems(coffeeAmountList);
     }
 
     @FXML

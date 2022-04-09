@@ -93,7 +93,7 @@ public class MainController {
         try {
             Stage stage = new Stage();
             stage.setScene(storeOrderViewScene);
-            //storeOrderViewController.updateListView();
+            storeOrderViewController.initialize();
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();

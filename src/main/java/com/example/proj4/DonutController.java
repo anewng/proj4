@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -47,17 +46,20 @@ public class DonutController {
     @FXML
     private TextField donutSubtotal;
 
-
     ArrayList<Donut> donutArrayList = new ArrayList<Donut>();
 
     @FXML
     private void initialize() throws IOException {
         donutTypeSelect.setItems(donutTypeList);
         donutAmountSelect.setItems(donutAmountList);
+        donutSubtotal.setEditable(false);
     }
 
     @FXML
     protected void onDonutTypeSelected(Event itemStateChanged) {
+        if(donutTypeSelect.getValue() == null){
+            return;
+        }
         if(donutTypeSelect.getValue().toString().equals("Donut Hole")) {
             donutFlavorSelect.setItems(flavorsDonutHoleList);
         } else if(donutTypeSelect.getValue().toString().equals("Yeast Donut")) {
@@ -163,11 +165,14 @@ public class DonutController {
         for (int i = 0; i < donutArrayList.size(); i++) {
             orderViewController.yourOrderArrayList.add(donutArrayList.get(i));
         }
+        donutTypeSelect.getItems().clear();
         donutFlavorSelect.getItems().clear();
         donutAmountSelect.getItems().clear();
         donutAmountSelect.getItems().clear();
         donutOrderPreview.getItems().clear();
         donutSubtotal.clear();
+        donutTypeSelect.setItems(donutTypeList);
+        donutAmountSelect.setItems(donutAmountList);
     }
 
     public void setOrderViewController(OrderViewController controller) {
