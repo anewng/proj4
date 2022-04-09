@@ -54,10 +54,6 @@ public class DonutController {
     private void initialize() throws IOException {
         donutTypeSelect.setItems(donutTypeList);
         donutAmountSelect.setItems(donutAmountList);
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("order-view.fxml"));
-        loader.load();
-        orderViewController = loader.getController();
-        orderViewController.setDonutController(this);*/
     }
 
     @FXML
@@ -128,7 +124,7 @@ public class DonutController {
 
         String selectedFlavor = setFlavor(thirdToken); //set the flavor based on the third token
         int removalIndex = findFlavorIndex(selectedFlavor);
-        donutArrayList.remove(removalIndex);
+        donutArrayList.remove(removalIndex); //fix this w/ new string format
 
         updateListView();
         updateSubtotal();
@@ -164,7 +160,6 @@ public class DonutController {
     protected void onAddToOrderButtonClick(ActionEvent event) throws IOException {
         for (int i = 0; i < donutArrayList.size(); i++) {
             orderViewController.yourOrderArrayList.add(donutArrayList.get(i));
-            System.out.println(orderViewController.yourOrderArrayList.get(0).toString());
         }
     }
 
