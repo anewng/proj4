@@ -3,7 +3,7 @@ package com.example.proj4;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Coffee extends MenuItem{
+public class Coffee extends MenuItem implements Customizable{
     private static final double SHORT_PRICE = 1.69;
     private static final double TALL_PRICE = 2.09;
     private static final double GRANDE_PRICE = 2.49;
@@ -42,47 +42,36 @@ public class Coffee extends MenuItem{
         this.size = size;
     }
 
-    public void setAddOns(boolean setCream, boolean setSyrup, boolean setMilk,
-                          boolean setCaramel, boolean setWhippedCream){
-        cream = setCream;
-        syrup = setSyrup;
-        milk = setMilk;
-        caramel = setCaramel;
-        whippedCream = setWhippedCream;
-    }
-
     @Override
     public String toString() {
         String coffeeString = "Coffee, " + size + " (" + getQuantity() + ")";
-        if(hasAddOns()){
-            coffeeString += ", add-ons:";
+        if(addOnCount != 0){
+            coffeeString += ", add-ons: ";
         }
-        if(cream){
-            coffeeString += " cream";
-        }
-        if(syrup){
-            coffeeString += " syrup";
-        }
-        if(milk){
-            coffeeString += " milk";
-        }
-        if(caramel){
-            coffeeString += " caramel";
-        }
-        if(whippedCream){
-            coffeeString += " whippedCream";
+        for(int i = 0; i < addOnCount - 1; i++){
+            coffeeString += addOns.get(i) + " ";
         }
         return coffeeString;
     }
 
-    private boolean hasAddOns(){
-        return cream || syrup || milk || caramel || whippedCream;
-    }
-
-    public void addAddOn(String addOn) {
+    @Override
+    public boolean addObject(Object obj) {
+        String addOn = (String) obj;
         addOns.add(addOn);
         addOnCount++;
+        return true;
     }
 
-
+    @Override
+    public boolean remove(Object obj) {
+        String addOn = (String) obj;
+        for(int i = 0; i < addOns.size(); i++){
+            if(addOns.get(i).equals(addOn)){
+                addOns.remove(i);
+                addOnCount--;
+                return true;
+            }
+        }
+        return false;
+    }
 }

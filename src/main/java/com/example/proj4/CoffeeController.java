@@ -1,7 +1,5 @@
 package com.example.proj4;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -50,9 +48,9 @@ public class CoffeeController {
         Coffee newCoffee = new Coffee();
         newCoffee.setSize(coffeeSizeSelect.getValue().toString());
         newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
-        newCoffee.setAddOns(cream.isSelected(), syrup.isSelected(), milk.isSelected(),
-                caramel.isSelected(), whippedCream.isSelected());
-        orderViewController.yourOrderArrayList.add(newCoffee);
+        trackAddOns(newCoffee);
+
+        orderViewController.yourOrderArrayList.getOrderArray().add(newCoffee);
 
         coffeeSizeSelect.setValue(null);
         coffeeAmountSelect.setValue(null);
@@ -73,26 +71,34 @@ public class CoffeeController {
         if(coffeeSizeSelect.getValue() != null){
             coffee.setSize(coffeeSizeSelect.getValue().toString());
         }
-        if (cream.isSelected()) {
-            coffee.addAddOn("cream");
-        }
-        if (syrup.isSelected()) {
-            coffee.addAddOn("syrup");
-        }
-        if (milk.isSelected()) {
-            coffee.addAddOn("milk");
-        }
-        if (caramel.isSelected()) {
-            coffee.addAddOn("caramel");
-        }
-        if (whippedCream.isSelected()) {
-            coffee.addAddOn("whipped cream");
-        }
+        trackAddOns(coffee);
+
         subtotal = coffee.itemPrice() * coffee.getQuantity();
         DecimalFormat d = new DecimalFormat("'$'#,##0.00");
         coffeeSubtotal.setText(d.format(subtotal));
 
     }
+
+    private Coffee trackAddOns(Coffee coffee){
+        if (cream.isSelected()) {
+            coffee.addObject("cream");
+        }
+        if (syrup.isSelected()) {
+            coffee.addObject("syrup");
+        }
+        if (milk.isSelected()) {
+            coffee.addObject("milk");
+        }
+        if (caramel.isSelected()) {
+            coffee.addObject("caramel");
+        }
+        if (whippedCream.isSelected()) {
+            coffee.addObject("whipped cream");
+        }
+        return coffee;
+    }
+
+
     public void setOrderViewController(OrderViewController controller) {
         orderViewController = controller;
     }

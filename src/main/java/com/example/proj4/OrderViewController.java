@@ -15,7 +15,7 @@ public class OrderViewController {
     private static final double SALES_TAX = 0.06625;
     private static final int AUTOMATIC_REMOVAL_INDEX = -1;
 
-    public ArrayList<MenuItem> yourOrderArrayList = new ArrayList<MenuItem>();
+    public Order yourOrderArrayList = new Order();
 
     @FXML
     private ListView yourOrders;
@@ -32,15 +32,16 @@ public class OrderViewController {
     @FXML
     public void updateListView(){
         yourOrders.getItems().clear();
-        for(int i = 0; i < yourOrderArrayList.size(); i ++){
-            yourOrders.getItems().add(yourOrderArrayList.get(i));
+        for(int i = 0; i < yourOrderArrayList.getOrderArray().size(); i ++){
+            yourOrders.getItems().add(yourOrderArrayList.getOrderArray().get(i));
         }
     }
     @FXML
     public void updateTotals(){
         double subtotalDouble = 0;
-        for (int i = 0; i < yourOrderArrayList.size(); i++) {
-            subtotalDouble += yourOrderArrayList.get(i).itemPrice() * yourOrderArrayList.get(i).getQuantity();
+        for (int i = 0; i < yourOrderArrayList.getOrderArray().size(); i++) {
+            subtotalDouble += yourOrderArrayList.getOrderArray().get(i).itemPrice()
+                    * yourOrderArrayList.getOrderArray().get(i).getQuantity();
         }
         DecimalFormat d = new DecimalFormat("'$'#,##0.00");
         String subtotalString = d.format(subtotalDouble);
@@ -57,10 +58,20 @@ public class OrderViewController {
 
     @FXML
     protected void onPlaceOrderButtonClick(ActionEvent event) {
-        Order newOrder = new Order(yourOrderArrayList);
-        storeOrderViewController.storeOrderArrayList.add(newOrder);
-        yourOrderArrayList = new ArrayList<MenuItem>();
+        Order newOrder = new Order();
+        newOrder = yourOrderArrayList;
 
+        int lastIndex = storeOrderViewController.storeOrderArrayList.size() - 1;
+        if(storeOrderViewController.storeOrderArrayList.size() == 0){
+            yourOrderArrayList.setOrderNumber(1);
+        }else{
+            yourOrderArrayList.setOrderNumber(storeOrderViewController.storeOrderArrayList
+                    .get(lastIndex).getOrderNumber() + 1);
+        }
+        storeOrderViewController.storeOrderArrayList.add(yourOrderArrayList);
+
+
+        yourOrderArrayList = new Order();
         yourOrders.getItems().clear();
         subTotal.clear();
         salesTax.clear();
@@ -84,16 +95,16 @@ public class OrderViewController {
         }
 
         int removalIndex = AUTOMATIC_REMOVAL_INDEX;
-        for(int i = 0; i < yourOrderArrayList.size(); i++){
-            if(yourOrderArrayList.get(i) instanceof Coffee && itemType.equals("Coffee")
-                    && ((Coffee) yourOrderArrayList.get(i)).getSize().equals(flavorSizeToken)){
+        for(int i = 0; i < yourOrderArrayList.getOrderArray().size(); i++){
+            if(yourOrderArrayList.getOrderArray().get(i) instanceof Coffee && itemType.equals("Coffee")
+                    && ((Coffee) yourOrderArrayList.getOrderArray().get(i)).getSize().equals(flavorSizeToken)){
                 removalIndex = i;
-            } else if(yourOrderArrayList.get(i) instanceof Donut && itemType.equals("Donut")
-                    && ((Donut) yourOrderArrayList.get(i)).getFlavor().equals(flavorSizeToken)){
+            } else if(yourOrderArrayList.getOrderArray().get(i) instanceof Donut && itemType.equals("Donut")
+                    && ((Donut) yourOrderArrayList.getOrderArray().get(i)).getFlavor().equals(flavorSizeToken)){
                 removalIndex = i;
             }
         }
-        yourOrderArrayList.remove(removalIndex);
+        yourOrderArrayList.getOrderArray().remove(removalIndex);
 
         updateListView();
         updateTotals();

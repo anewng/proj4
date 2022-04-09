@@ -46,7 +46,7 @@ public class DonutController {
     @FXML
     private TextField donutSubtotal;
 
-    ArrayList<Donut> donutArrayList = new ArrayList<Donut>();
+    Order donutArrayList = new Order();
 
     @FXML
     private void initialize() throws IOException {
@@ -82,10 +82,10 @@ public class DonutController {
         }
         newDonut.setQuantity(Integer.parseInt(donutAmountSelect.getValue().toString()));
         if (findDonutIndex(newDonut) == NOT_FOUND){
-            donutArrayList.add(newDonut);
+            donutArrayList.getOrderArray().add(newDonut);
         } else {
-            int oldAmount = donutArrayList.get(findDonutIndex(newDonut)).getQuantity();
-            donutArrayList.get(findDonutIndex(newDonut)).setQuantity(oldAmount + newDonut.getQuantity());
+            int oldAmount = donutArrayList.getOrderArray().get(findDonutIndex(newDonut)).getQuantity();
+            donutArrayList.getOrderArray().get(findDonutIndex(newDonut)).setQuantity(oldAmount + newDonut.getQuantity());
         }
 
         updateListView();
@@ -94,15 +94,15 @@ public class DonutController {
 
     private double findDonutSubtotal(){
         double subtotal = 0;
-        for(int i = 0; i < donutArrayList.size(); i++){
-            subtotal += ( donutArrayList.get(i).price * donutArrayList.get(i).getQuantity() );
+        for(int i = 0; i < donutArrayList.getOrderArray().size(); i++){
+            subtotal += ( donutArrayList.getOrderArray().get(i).itemPrice() * donutArrayList.getOrderArray().get(i).getQuantity() );
         }
         return subtotal;
     }
 
     private int findDonutIndex(Donut newDonut){
-        for(int i = 0; i < donutArrayList.size(); i++){
-            if(donutArrayList.get(i).flavor.equals(newDonut.flavor)){
+        for(int i = 0; i < donutArrayList.getOrderArray().size(); i++){
+            if(((Donut) donutArrayList.getOrderArray().get(i)).getFlavor().equals(newDonut.flavor)){
                 return i;
             }
         }
@@ -110,8 +110,8 @@ public class DonutController {
     }
 
     private int findFlavorIndex(String flavor){
-        for(int i = 0; i < donutArrayList.size(); i++){
-            if(donutArrayList.get(i).flavor.equals(flavor)){
+        for(int i = 0; i < donutArrayList.getOrderArray().size(); i++){
+            if(((Donut) donutArrayList.getOrderArray().get(i)).getFlavor().equals(flavor)){
                 return i;
             }
         }
@@ -137,8 +137,8 @@ public class DonutController {
 
     private void updateListView(){
         donutOrderPreview.getItems().clear();
-        for(int i = 0; i < donutArrayList.size(); i ++){
-            donutOrderPreview.getItems().add(donutArrayList.get(i));
+        for(int i = 0; i < donutArrayList.getOrderArray().size(); i ++){
+            donutOrderPreview.getItems().add(donutArrayList.getOrderArray().get(i));
         }
     }
 
@@ -163,8 +163,8 @@ public class DonutController {
 
     @FXML
     protected void onAddToOrderButtonClick(ActionEvent event) throws IOException {
-        for (int i = 0; i < donutArrayList.size(); i++) {
-            orderViewController.yourOrderArrayList.add(donutArrayList.get(i));
+        for (int i = 0; i < donutArrayList.getOrderArray().size(); i++) {
+            orderViewController.yourOrderArrayList.addObject(donutArrayList.getOrderArray().get(i));
         }
         donutTypeSelect.setValue(null);
         donutFlavorSelect.setValue(null);
@@ -173,7 +173,7 @@ public class DonutController {
         donutOrderPreview.getItems().clear();
         donutSubtotal.clear();
 
-        donutArrayList = new ArrayList<Donut>();
+        donutArrayList = new Order();
     }
 
     public void setOrderViewController(OrderViewController controller) {

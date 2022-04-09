@@ -16,7 +16,7 @@ public class StoreOrderViewController {
     private static final double SALES_TAX = 0.06625;
 
     public ArrayList<Order> storeOrderArrayList = new ArrayList<Order>();
-    public ArrayList<MenuItem> selectedOrderList = new ArrayList<MenuItem>();
+    public Order selectedOrderList = new Order();
 
     ObservableList<String> orderNumbersList = FXCollections
             .observableArrayList();
@@ -31,12 +31,7 @@ public class StoreOrderViewController {
     @FXML
     public void initialize(){
         total.setEditable(false);
-
-        //setting the order combobox options
-        for(int i = 0; i < storeOrderArrayList.size(); i++) {
-            orderNumbersList.add(String.valueOf(i+1));
-        }
-        orderNumber.setItems(orderNumbersList);
+        resetComboBox();
     }
 
     @FXML
@@ -51,20 +46,35 @@ public class StoreOrderViewController {
         if(orderNumber.getValue() == null){
             return;
         }
-        int selectedOrderIndex = Integer.parseInt(orderNumber.getValue().toString()) - 1;
-        selectedOrderList = storeOrderArrayList.get(selectedOrderIndex);
+        int selectedOrderIndex = Integer.parseInt(orderNumber.getValue().toString());
+        selectedOrderList = findSelectedOrder(selectedOrderIndex);
 
-        for(int i = 0; i < selectedOrderList.size(); i ++){
-            storeOrders.getItems().add(selectedOrderList.get(i).toString());
+        //displaying the selected order in the list view
+        for(int i = 0; i < selectedOrderList.getOrderArray().size(); i ++){
+            storeOrders.getItems().add(selectedOrderList.getOrderArray().get(i).toString());
         }
+    }
+
+    private Order findSelectedOrder(int selectedOrderIndex){
+        //find the selected order by iterating through the store orders array and searching for orderNumber
+        for(int j = 0; j < storeOrderArrayList.size(); j++){
+            if(storeOrderArrayList.get(j).getOrderNumber() == selectedOrderIndex){
+                return storeOrderArrayList.get(j);
+            }
+        }
+        return null;
     }
 
     @FXML
     public void updateTotalField(){
         total.clear();
         double totalDouble = 0;
-        for(int i = 0; i < selectedOrderList.size(); i++){
-            totalDouble += selectedOrderList.get(i).itemPrice() * selectedOrderList.get(i).getQuantity();
+        if(selectedOrderList == null){
+            return;
+        }
+        for(int i = 0; i < selectedOrderList.getOrderArray().size(); i++){
+            totalDouble += selectedOrderList.getOrderArray().get(i).itemPrice()
+                    * selectedOrderList.getOrderArray().get(i).getQuantity();
         }
         double taxDouble = totalDouble * SALES_TAX;
         totalDouble = totalDouble + taxDouble;
@@ -78,8 +88,18 @@ public class StoreOrderViewController {
     protected void onCancelOrderButtonClick(ActionEvent event) {
         storeOrders.getItems().clear();
         total.clear();
-        storeOrderArrayList.set(Integer.parseInt(orderNumber.getValue().toString()) - 1, null);
-        orderNumbersList.remove(Integer.parseInt(orderNumber.getValue().toString()) - 1);
+        selectedOrderList = findSelectedOrder(Integer.parseInt(orderNumber.getValue().toString()));
+        storeOrderArrayList.remove(selectedOrderList);
+        selectedOrderList = null;
+        resetComboBox();
+        updateTotalField();
+    }
+
+    private void resetComboBox(){
+        orderNumber.getItems().clear();
+        for(int i = 0; i < storeOrderArrayList.size(); i++) {
+            orderNumbersList.add(String.valueOf(storeOrderArrayList.get(i).getOrderNumber()));
+        }
         orderNumber.setItems(orderNumbersList);
     }
 
