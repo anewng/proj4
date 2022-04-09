@@ -8,9 +8,7 @@ public abstract class MenuItem {
 
     public MenuItem() {}
 
-    public double itemPrice() {
-        return 0;
-    }
+    public abstract double itemPrice();
 
     @Override
     public String toString() {

@@ -3,16 +3,18 @@ package com.example.proj4;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Coffee extends MenuItem{
-    private String size;
-    private int addOnCount;
-    private ArrayList<String> addOns = new ArrayList<String>();
-
+public class Coffee extends MenuItem implements Customizable{
     private static final double SHORT_PRICE = 1.69;
     private static final double TALL_PRICE = 2.09;
     private static final double GRANDE_PRICE = 2.49;
     private static final double VENTI_PRICE = 2.89;
     private static final double ADD_IN_PRICE = 0.30;
+
+    private String size;
+    private int addOnCount;
+    private ArrayList<String> addOns = new ArrayList<String>();
+
+    private boolean cream = false, syrup = false, milk = false, caramel = false, whippedCream = false;
 
     @Override
     public double itemPrice() {
@@ -42,26 +44,34 @@ public class Coffee extends MenuItem{
 
     @Override
     public String toString() {
-        return "Coffee, " + size + " (" + getQuantity() + ")";
+        String coffeeString = "Coffee, " + size + " (" + getQuantity() + ")";
+        if(addOnCount != 0){
+            coffeeString += ", add-ons: ";
+        }
+        for(int i = 0; i < addOnCount - 1; i++){
+            coffeeString += addOns.get(i) + " ";
+        }
+        return coffeeString;
     }
 
-    public void addAddOn(String addOn) {
+    @Override
+    public boolean addObject(Object obj) {
+        String addOn = (String) obj;
         addOns.add(addOn);
         addOnCount++;
+        return true;
     }
 
-    public void removeAddOn(String addOn) {
-        addOns.remove(addOn);
-        addOnCount--;
+    @Override
+    public boolean remove(Object obj) {
+        String addOn = (String) obj;
+        for(int i = 0; i < addOns.size(); i++){
+            if(addOns.get(i).equals(addOn)){
+                addOns.remove(i);
+                addOnCount--;
+                return true;
+            }
+        }
+        return false;
     }
-
-    public int getAddOnCount() {
-        return addOnCount;
-    }
-
-    public ArrayList<String> getAddOns() {
-        return addOns;
-    }
-
-
 }
