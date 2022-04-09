@@ -23,8 +23,6 @@ public class OrderViewController {
     private ListView yourOrders;
     @FXML
     private TextField subTotal, salesTax, total;
-    @FXML
-    private Button removeOrder;
 
 
     @FXML
@@ -52,10 +50,12 @@ public class OrderViewController {
         String totalString = d.format(totalDouble);
         total.setText(totalString);
     }
+
     @FXML
     protected void onPlaceOrderButtonClick(ActionEvent event) {
         storeOrderViewController.storeOrderArrayList.add(yourOrderArrayList);
     }
+
     @FXML
     protected void onRemoveSelectedButtonClick(ActionEvent event) {
         StringTokenizer string = new StringTokenizer(yourOrders.getSelectionModel().getSelectedItem().toString());
@@ -91,7 +91,7 @@ public class OrderViewController {
     private String setItemType(String firstToken){
         if(firstToken.equals("Donut") || firstToken.equals("Yeast") || firstToken.equals("Cake")){
             return "Donut";
-        } else if (firstToken.equals("Coffee")) {
+        } else if (firstToken.equals("Coffee,")) {
             return "Coffee";
         } else {
             return "invalid item type";
