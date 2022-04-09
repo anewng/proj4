@@ -12,17 +12,26 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController {
-    private OrderViewController orderViewController;
     private DonutController donutController;
-    private FXMLLoader orderViewLoader;
-    private Parent orderViewRoot;
+    private CoffeeController coffeeController;
+    private OrderViewController orderViewController;
+    private StoreOrderViewController storeOrderViewController;
     private FXMLLoader donutLoader;
+    private FXMLLoader coffeeLoader;
+    private FXMLLoader orderViewLoader;
+    private FXMLLoader storeOrderLoader;
+    private Parent donutViewRoot;
+    private Parent coffeeViewRoot;
+    private Parent orderViewRoot;
+    private Parent storeViewRoot;
+    private Scene orderViewScene;
 
     @FXML
     private void initialize() throws IOException {
         orderViewLoader = new FXMLLoader(getClass().getResource("order-view.fxml"));
         orderViewLoader.load();
         orderViewController = orderViewLoader.getController();
+        orderViewScene = new Scene(orderViewLoader.getRoot());
         //orderViewController.setMainController(this);
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("store-order-view.fxml"));
         loader2.load();
@@ -67,7 +76,8 @@ public class MainController {
     protected void onYourOrderButtonClick(ActionEvent event) throws IOException {
         try {
             Stage stage = new Stage();
-            stage.setScene(new Scene(orderViewLoader.getRoot()));
+            stage.setScene(orderViewScene);
+            orderViewController.updateListView();
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();

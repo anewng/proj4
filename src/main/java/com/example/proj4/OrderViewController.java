@@ -19,7 +19,9 @@ public class OrderViewController {
         yourOrders.getItems().add(donut);
         updateListView();
     }
-    private void updateListView(){
+
+    @FXML
+    public void updateListView(){
         yourOrders.getItems().clear();
         for(int i = 0; i < yourOrderArrayList.size(); i ++){
             yourOrders.getItems().add(yourOrderArrayList.get(i));
