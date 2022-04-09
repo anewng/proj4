@@ -40,13 +40,17 @@ public class CoffeeController {
 
     @FXML
     protected void onCoffeeSizeSelected(ActionEvent event) {
-        coffee.setSize(coffeeSizeSelect.getValue().toString());
+        if(coffeeSizeSelect.getValue() != null){
+            coffee.setSize(coffeeSizeSelect.getValue().toString());
+        }
         updateSubtotalAndCoffee();
     }
 
     @FXML
     protected void onCoffeeQuantitySelected(ActionEvent event) {
-        coffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
+        if(coffeeAmountSelect.getValue() != null){
+            coffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
+        }
         updateSubtotalAndCoffee();
     }
 
@@ -74,7 +78,9 @@ public class CoffeeController {
     }
 
     private void updateSubtotalAndCoffee() {
-        coffee.setSize(coffeeSizeSelect.getValue().toString());
+        if(coffeeSizeSelect.getValue() != null){
+            coffee.setSize(coffeeSizeSelect.getValue().toString());
+        }
         if (cream.isSelected()) {
             coffee.addAddOn("cream");
         }
