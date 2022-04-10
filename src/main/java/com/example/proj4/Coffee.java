@@ -1,6 +1,5 @@
 package com.example.proj4;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Coffee extends MenuItem implements Customizable{

@@ -1,7 +1,5 @@
 package com.example.proj4;
 
-import java.text.DecimalFormat;
-
 public abstract class Donut extends MenuItem {
     private String flavor;
 

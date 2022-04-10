@@ -1,7 +1,5 @@
 package com.example.proj4;
 
-import java.text.DecimalFormat;
-
 public class YeastDonut extends Donut{
 
     private static final String FLAVOR_1 = "Fungi";
