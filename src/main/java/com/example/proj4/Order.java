@@ -1,10 +1,12 @@
 package com.example.proj4;
 
+import javafx.scene.control.Menu;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class Order {
+public class Order implements Customizable {
     private ArrayList<MenuItem> order;
     private int orderNumber;
 
@@ -26,56 +28,47 @@ public class Order {
         return order;
     }
 
-    //@Override
+    @Override
     public boolean addObject(Object obj) {
         MenuItem newOrder = (MenuItem) obj;
         order.add(newOrder);
         return true;
     }
 
-    /*
     @Override
     public boolean remove(Object obj) {
-        String yourOrders = (String) obj;
-        StringTokenizer string = new StringTokenizer(yourOrders);
-        String flavorSizeToken = "";
-        String itemType = setItemType(string.nextToken());
+        String itemType = "", flavorSizeToken = "";
 
-        if(itemType.equals("Coffee")){
-            flavorSizeToken = string.nextToken(); // getting coffee flavor
-        } else if(itemType.equals("invalid item type")) {
-            return false;
-        } else {
-            string.nextToken();
-            flavorSizeToken = string.nextToken(); //getting donut flavor
-            flavorSizeToken = setDonutFlavor(flavorSizeToken);
+        MenuItem menuItem = (MenuItem) obj;
+        if(menuItem instanceof Donut){
+            Donut donutItem = (Donut) menuItem;
+            if(donutItem instanceof DonutHole) {
+                itemType = "DonutHole";
+            } else if (donutItem instanceof YeastDonut) {
+                itemType = "YeastDonut";
+            } else if (donutItem instanceof CakeDonut) {
+                itemType = "CakeDonut";
+            }
+            flavorSizeToken = donutItem.getFlavor();
+        }else if (menuItem instanceof Coffee){
+            Coffee coffeeItem = (Coffee) menuItem;
+            itemType = "Coffee";
+            flavorSizeToken = coffeeItem.getSize();
         }
 
-        int removalIndex = AUTOMATIC_REMOVAL_INDEX;
         for(int i = 0; i < order.size(); i++){
             if(order.get(i) instanceof Coffee && itemType.equals("Coffee")
                     && ((Coffee) order.get(i)).getSize().equals(flavorSizeToken)){
-                removalIndex = i;
-                order.remove(removalIndex);
+                order.remove(i);
                 return true;
-            } else if(order.get(i) instanceof Donut && itemType.equals("Donut")
+            } else if(order.get(i) instanceof Donut &&
+                    (itemType.equals("DonutHole") || itemType.equals("CakeDonut") || itemType.equals("YeastDonut"))
                     && ((Donut) order.get(i)).getFlavor().equals(flavorSizeToken)){
-                removalIndex = i;
-                order.remove(removalIndex);
+                order.remove(i);
                 return true;
             }
         }
         return false;
-    }
-
-    private String setItemType(String firstToken){
-        if(firstToken.equals("Donut") || firstToken.equals("Yeast") || firstToken.equals("Cake")){
-            return "Donut";
-        } else if (firstToken.equals("Coffee,")) {
-            return "Coffee";
-        } else {
-            return "invalid item type";
-        }
     }
 
     private String setDonutFlavor(String thirdToken){
@@ -90,5 +83,14 @@ public class Order {
         } else {
             return thirdToken;
         }
-    }*/
+    }
+
+    public double getSubtotal(){
+        double subtotal = 0;
+        for (int i = 0; i < order.size(); i++) {
+            subtotal += order.get(i).itemPrice()
+                    * order.get(i).getQuantity();
+        }
+        return subtotal;
+    }
 }

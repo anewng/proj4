@@ -6,14 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.StringTokenizer;
 
 public class DonutController {
@@ -46,6 +46,8 @@ public class DonutController {
     private ListView donutOrderPreview;
     @FXML
     private TextField donutSubtotal;
+    @FXML
+    private AnchorPane anchorPane;
 
     Order donutArrayList = new Order();
 
@@ -127,33 +129,29 @@ public class DonutController {
         return NOT_FOUND;
     }
 
-    private int findFlavorIndex(String flavor){
-        for(int i = 0; i < donutArrayList.getOrderArray().size(); i++){
-            if(((Donut) donutArrayList.getOrderArray().get(i)).getFlavor().equals(flavor)){
-                return i;
-            }
-        }
-        return NOT_FOUND;
-    }
-
     @FXML
     protected void onRemoveSelectedButtonClick(ActionEvent event) {
-        if (donutOrderPreview.getSelectionModel().getSelectedItem()==null) {
+        if (donutOrderPreview.getSelectionModel().getSelectedItem() == null) {
             Alert error = new Alert(Alert.AlertType.NONE);
             error.setAlertType(Alert.AlertType.ERROR);
             error.setContentText("No item selected");
             error.show();
         } else {
             StringTokenizer string = new StringTokenizer(donutOrderPreview.getSelectionModel().getSelectedItem().toString());
-            string.nextToken(); //skipping the first token
+            String firstToken = string.nextToken(); //first toke = type of donut
             string.nextToken(); //skipping the second token
             String thirdToken = string.nextToken();
-
             String selectedFlavor = setFlavor(thirdToken); //set the flavor based on the third token
-            System.out.println(selectedFlavor);
-            int removalIndex = findFlavorIndex(selectedFlavor);
 
-            donutArrayList.getOrderArray().remove(removalIndex);
+            Donut newDonut = new DonutHole(selectedFlavor);
+            if (firstToken.equals("Donut")) {
+                newDonut = new DonutHole(selectedFlavor);
+            } else if (firstToken.equals("Yeast")) {
+                newDonut = new YeastDonut(selectedFlavor);
+            } else if (firstToken.equals("Cake")) {
+                newDonut = new CakeDonut(selectedFlavor);
+            }
+            donutArrayList.remove(newDonut);
 
             updateListView();
             updateSubtotal();
@@ -188,17 +186,30 @@ public class DonutController {
 
     @FXML
     protected void onAddToOrderButtonClick(ActionEvent event) throws IOException {
-        for (int i = 0; i < donutArrayList.getOrderArray().size(); i++) {
-            orderViewController.yourOrderArrayList.addObject(donutArrayList.getOrderArray().get(i));
-        }
-        donutTypeSelect.setValue(null);
-        donutFlavorSelect.setValue(null);
-        donutAmountSelect.setValue(null);
-        donutAmountSelect.setValue(null);
-        donutOrderPreview.getItems().clear();
-        donutSubtotal.clear();
+        if (donutOrderPreview.getItems().size() == 0) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setContentText("Cart is empty");
+            error.show();
+        } else {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setContentText("Confirm order addition");
+            Optional<ButtonType> result = confirmation.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                for (int i = 0; i < donutArrayList.getOrderArray().size(); i++) {
+                    orderViewController.yourOrderArrayList.addObject(donutArrayList.getOrderArray().get(i));
+                }
+                donutTypeSelect.setValue(null);
+                donutFlavorSelect.setValue(null);
+                donutAmountSelect.setValue(null);
+                donutAmountSelect.setValue(null);
+                donutOrderPreview.getItems().clear();
+                donutSubtotal.clear();
+                donutArrayList = new Order();
 
-        donutArrayList = new Order();
+                Stage stage = (Stage) anchorPane.getScene().getWindow();
+                stage.close();
+            }
+        }
     }
 
     public void setOrderViewController(OrderViewController controller) {
