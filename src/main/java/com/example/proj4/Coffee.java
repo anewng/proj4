@@ -2,6 +2,13 @@ package com.example.proj4;
 
 import java.util.ArrayList;
 
+/**
+ The Coffee class is used to create, manipulate, and access Donut objects.
+ It is a subclass of MenuItem, and implements the Customizable interface.
+ A coffee's size and price accessed, and the coffee can also be converted to a string.
+ Coffee addons can be added or removed.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class Coffee extends MenuItem implements Customizable{
     private static final double SHORT_PRICE = 1.69;
     private static final double TALL_PRICE = 2.09;
@@ -51,14 +58,6 @@ public class Coffee extends MenuItem implements Customizable{
      */
     public void setSize(String size) {
         this.size = size;
-    }
-
-    /**
-     Sets the coffee's addOn count.
-     @param addOnCt a String representing the add on count.
-     */
-    public void setAddOnCount(int addOnCt) {
-        this.addOnCount = addOnCt;
     }
 
     /**

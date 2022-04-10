@@ -15,6 +15,10 @@ import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.StringTokenizer;
 
+/**
+ The OrderViewController class dictates the function of the order view GUI.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class OrderViewController {
     private StoreOrderViewController storeOrderViewController;
 

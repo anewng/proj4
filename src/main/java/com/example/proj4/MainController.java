@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ The MainController class dictates the function of the main view GUI.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class MainController {
     private DonutController donutController;
     private CoffeeController coffeeController;

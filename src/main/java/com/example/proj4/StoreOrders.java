@@ -2,6 +2,12 @@ package com.example.proj4;
 
 import java.util.ArrayList;
 
+/**
+ The StoreOrder class is used to create, manipulate, and access StoreOrder objects.
+ StoreOrders can be created, and the corresponding array of orders can be set and accessed
+ Orders can be added and removed from the store order.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class StoreOrders implements Customizable {
 
     private ArrayList<Order> orders;

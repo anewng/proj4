@@ -1,8 +1,6 @@
 package com.example.proj4;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +8,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ The MainApplication class runs the project by implementing the start method.
+ It acts as a driver for the program.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class MainApplication extends Application {
 
     /**

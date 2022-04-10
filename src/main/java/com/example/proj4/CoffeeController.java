@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 import java.text.DecimalFormat;
 import java.util.Optional;
 
+/**
+ The CoffeeController class dictates the function of the coffee view GUI.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class CoffeeController {
 
     private double subtotal = 0;

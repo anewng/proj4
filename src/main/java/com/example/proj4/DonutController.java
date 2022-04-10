@@ -15,6 +15,10 @@ import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.StringTokenizer;
 
+/**
+ The DonutController class dictates the function of the donut view GUI.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class DonutController {
     private static final int NOT_FOUND = -1;
     private OrderViewController orderViewController;

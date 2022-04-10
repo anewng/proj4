@@ -2,6 +2,12 @@ package com.example.proj4;
 
 import java.util.ArrayList;
 
+/**
+ The Order class is used to create, manipulate, and access Order objects.
+ Orders can be created, their corresponding order numbers and subtotals can be set and accessed
+ Menu items can be added and removed from the order.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class Order implements Customizable {
     private ArrayList<MenuItem> order;
     private int orderNumber;
