@@ -1,7 +1,6 @@
 package com.example.proj4;
 
 import javafx.scene.control.Menu;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
