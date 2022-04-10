@@ -58,6 +58,17 @@ public class StoreOrders implements Customizable {
             return false;
         }
     }
+
+    public String toString(){
+        String string = "";
+        for(int i = 0; i < orders.size(); i++){
+            string += "index: " + i + " order number: " + orders.get(i).getOrderNumber() + "\n";
+            for(int j = 0; j < orders.get(i).getOrderArray().size(); j++){
+                string += orders.get(i).getOrderArray().get(j).toString() + "\n";
+            }
+        }
+        return string;
+    }
 }
 
 

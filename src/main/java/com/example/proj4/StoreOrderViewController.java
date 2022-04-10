@@ -129,12 +129,29 @@ public class StoreOrderViewController {
             total.clear();
 
             selectedOrderList = findSelectedOrder(Integer.parseInt(orderNumber.getValue().toString()));
-            storeOrderArrayList.remove(selectedOrderList); //yas
+            System.out.println("\n***********************************************************\n" +
+                    "removal index: " + selectedOrderIndex +
+                    "\nSELECTED LIST AT INDEX:\n" + selectedOrderList.toString());
+            System.out.println("\nLIST BEFORE REMOVAL:\n" + storeOrderArrayList.toString());
+            storeOrderArrayList.remove(selectedOrderList);
+            System.out.println("\nCURRENT ORDER ARRAY LIST:\n" + storeOrderArrayList.toString());
 
+            System.out.println("\nORDER NUMBER list: ");
+            for(int i = 0; i < orderNumbersList.size(); i ++){
+                System.out.print(orderNumbersList.get(i) + " ");
+            }
             orderNumbersList.remove(selectedOrderIndex);
+            System.out.println("\norder number list AFTER REMOVAL: ");
+            for(int i = 0; i < orderNumbersList.size(); i ++){
+                System.out.print(orderNumbersList.get(i) + " ");
+            }
 
-            storeOrders.getItems().clear();
-            orderNumber.setItems(orderNumbersList);
+            storeOrders.getItems().clear(); //clearing the list view
+            resetComboBox();
+            System.out.println("\ncombo box options AFTER REMOVAL: ");
+            for(int i = 0; i < orderNumber.getItems().size(); i ++){
+                System.out.print(orderNumber.getItems().get(i).toString() + " ");
+            }
 
             selectedOrderList = new Order();
             updateTotalField();
@@ -172,7 +189,7 @@ public class StoreOrderViewController {
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
                 Stage stage = new Stage();
                 File targetFile = chooser.showSaveDialog(stage); //get the reference of the target file
-                //write code to write to the file.
+
                 FileWriter fileWriter = new FileWriter(targetFile);
                 for (int i = 0; i < storeOrderArrayList.getOrders().size(); i++) {
                     fileWriter.write("Order #" + storeOrderArrayList.getOrders().get(i).getOrderNumber() + ":\n");

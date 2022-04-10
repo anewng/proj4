@@ -80,12 +80,7 @@ public class CoffeeController {
             confirmation.setContentText("Confirm order addition");
             Optional<ButtonType> result = confirmation.showAndWait();
             if (result.get() == ButtonType.OK) {
-                Coffee newCoffee = new Coffee();
-                newCoffee.setSize(coffeeSizeSelect.getValue().toString());
-                newCoffee.setQuantity(Integer.parseInt(coffeeAmountSelect.getValue().toString()));
-                trackAddOns(newCoffee);
-
-                orderViewController.yourOrderArrayList.getOrderArray().add(newCoffee);
+                orderViewController.yourOrderArrayList.getOrderArray().add(coffee);
 
                 coffeeSizeSelect.setValue(null);
                 coffeeAmountSelect.setValue(null);
@@ -95,6 +90,8 @@ public class CoffeeController {
                 milk.setSelected(false);
                 caramel.setSelected(false);
                 whippedCream.setSelected(false);
+
+                coffee = new Coffee();
 
                 Stage stage = (Stage) anchorPane.getScene().getWindow();
                 stage.close();
@@ -112,55 +109,85 @@ public class CoffeeController {
     }
 
     /**
-     Updates the subtotal text field and coffee order based on changes in the add-on checkboxes
+     Updates the add-ons when cream is selected or deselected
+     @param event the method is executed when the user checks or unchecks the add-on check box for cream
      */
-    private void updateSubtotalAndCoffee() {
-        if(coffeeSizeSelect.getValue() != null){
-            coffee.setSize(coffeeSizeSelect.getValue().toString());
-        }
-        trackAddOns(coffee);
-
-        subtotal = coffee.itemPrice() * coffee.getQuantity();
-        DecimalFormat d = new DecimalFormat("'$'#,##0.00");
-        coffeeSubtotal.setText(d.format(subtotal));
-
-    }
-
-    /**
-     Tracks the addons and updates the coffee order accordingly
-     @param coffee the coffee order that is to be updated based on the checked add-in boxes
-     */
-    private Coffee trackAddOns(Coffee coffee){
+    @FXML
+    protected void onCream(ActionEvent event){
         if (cream.isSelected()) {
             coffee.addObject("cream");
         } else if (!cream.isSelected()){
             coffee.remove("cream");
         }
-
+        updateSubtotalAndCoffee();
+    }
+    /**
+     Updates the add-ons when syrup is selected or deselected
+     @param event the method is executed when the user checks or unchecks the add-on check box for syrup
+     */
+    @FXML
+    protected void onSyrup(ActionEvent event){
         if (syrup.isSelected()) {
             coffee.addObject("syrup");
         } else if (!syrup.isSelected()){
             coffee.remove("syrup");
         }
-
+        updateSubtotalAndCoffee();
+    }
+    /**
+     Updates the add-ons when milk is selected or deselected
+     @param event the method is executed when the user checks or unchecks the add-on check box for milk
+     */
+    @FXML
+    protected void onMilk(ActionEvent event){
         if (milk.isSelected()) {
             coffee.addObject("milk");
         } else if (!milk.isSelected()){
             coffee.remove("milk");
         }
-
+        updateSubtotalAndCoffee();
+    }
+    /**
+     Updates the add-ons when caramel is selected or deselected
+     @param event the method is executed when the user checks or unchecks the add-on check box for caramel
+     */
+    @FXML
+    protected void onCaramel(ActionEvent event){
         if (caramel.isSelected()) {
             coffee.addObject("caramel");
         } else if (!caramel.isSelected()){
             coffee.remove("caramel");
         }
-
+        updateSubtotalAndCoffee();
+    }
+    /**
+     Updates the add-ons when whipped cream is selected or deselected
+     @param event the method is executed when the user checks or unchecks the add-on check box for whipped cream
+     */
+    @FXML
+    protected void onWhippedCream(ActionEvent event){
         if (whippedCream.isSelected()) {
             coffee.addObject("whipped cream");
         } else if (!whippedCream.isSelected()){
             coffee.remove("whipped cream");
         }
-        return coffee;
+        updateSubtotalAndCoffee();
+    }
+
+    /**
+     Updates the subtotal text field and coffee order based on changes in the add-on checkboxes
+     */
+    private void updateSubtotalAndCoffee() {
+        DecimalFormat d = new DecimalFormat("'$'#,##0.00");
+        if(coffeeSizeSelect.getValue() != null && coffeeAmountSelect.getValue() != null){
+            coffee.setSize(coffeeSizeSelect.getValue().toString());
+        } else{
+            coffeeSubtotal.setText(d.format(0));
+            return;
+        }
+
+        subtotal = coffee.itemPrice() * Integer.parseInt(coffeeAmountSelect.getValue().toString());
+        coffeeSubtotal.setText(d.format(subtotal));
     }
 
     /**

@@ -106,4 +106,12 @@ public class Order implements Customizable {
         }
         return subtotal;
     }
+
+    public String toString(){
+        String string = "";
+        for(int i = 0; i < order.size(); i++){
+            string += order.get(i).toString() + "\n";
+        }
+        return string;
+    }
 }

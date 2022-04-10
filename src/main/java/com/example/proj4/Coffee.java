@@ -20,20 +20,19 @@ public class Coffee extends MenuItem implements Customizable{
      */
     @Override
     public double itemPrice() {
-        double retPrice = 0;
         if (this.size == "Short") {
-            retPrice += SHORT_PRICE;
-        } else if (this.size == "Tall") {
-            retPrice += TALL_PRICE;
-        } else if (this.size == "Grande") {
-            retPrice += GRANDE_PRICE;
-        } else if (this.size == "Venti") {
-            retPrice += VENTI_PRICE;
-        } else {
-            return INVALID_CASE;
+            return SHORT_PRICE + (this.addOnCount * ADD_IN_PRICE);
         }
-        retPrice += (this.addOnCount * ADD_IN_PRICE);
-        return retPrice;
+        if (this.size == "Tall") {
+            return TALL_PRICE + (this.addOnCount * ADD_IN_PRICE);
+        }
+        if (this.size == "Grande") {
+            return GRANDE_PRICE + (this.addOnCount * ADD_IN_PRICE);
+        }
+        if (this.size == "Venti") {
+            return VENTI_PRICE + (this.addOnCount * ADD_IN_PRICE);
+        }
+        return INVALID_CASE;
     }
 
     /**
@@ -50,6 +49,14 @@ public class Coffee extends MenuItem implements Customizable{
      */
     public void setSize(String size) {
         this.size = size;
+    }
+
+    /**
+     Sets the coffee's addOn count.
+     @param addOnCt a String representing the add on count.
+     */
+    public void setAddOnCount(int addOnCt) {
+        this.addOnCount = addOnCt;
     }
 
     /**
