@@ -1,7 +1,5 @@
 package com.example.proj4;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -26,9 +24,6 @@ public class OrderViewController {
     private static final int AUTOMATIC_REMOVAL_INDEX = -1;
 
     private Order yourOrderArrayList = new Order();
-
-    ObservableList<String> storeOrdersListView = FXCollections
-            .observableArrayList();
 
     @FXML
     private ListView yourOrders;

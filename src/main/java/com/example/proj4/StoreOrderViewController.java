@@ -5,7 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import java.util.Optional;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -14,7 +19,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Optional;
 
 /**
  The StoreOrderViewController class dictates the function of the store order view GUI.
@@ -27,7 +31,7 @@ public class StoreOrderViewController {
     private StoreOrders storeOrderArrayList = new StoreOrders();
     private Order selectedOrderList = new Order();
 
-    ObservableList<String> orderNumbersList = FXCollections
+    private ObservableList<String> orderNumbersList = FXCollections
             .observableArrayList();
 
     @FXML
@@ -126,13 +130,12 @@ public class StoreOrderViewController {
      */
     @FXML
     protected void onCancelOrderButtonClick(ActionEvent event) {
-        if (storeOrders.getSelectionModel().getSelectedItem() == null) {
+        if (orderNumber.getSelectionModel().getSelectedItem() == null) {
             Alert error = new Alert(Alert.AlertType.NONE);
             error.setAlertType(Alert.AlertType.ERROR);
             error.setContentText("No order selected");
             error.show();
         } else {
-            storeOrders.getItems().clear();
             total.clear();
 
             selectedOrderList = findSelectedOrder(Integer.parseInt(orderNumber.getValue().toString()));
@@ -198,7 +201,6 @@ public class StoreOrderViewController {
                     fileWriter.write("Total: " + totalString + "\n\n");
                 }
                 fileWriter.close();
-                //make sure to clear storeOrderView
                 Stage mainStage = (Stage) anchorPane.getScene().getWindow();
                 mainStage.close();
             }

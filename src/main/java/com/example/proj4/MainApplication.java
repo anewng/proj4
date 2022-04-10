@@ -14,6 +14,7 @@ import java.io.IOException;
  @author Annie Wang, Jasmine Flanders
  */
 public class MainApplication extends Application {
+    private static final double SCENE_WIDTH_HEIGHT = 500;
 
     /**
      The start method loads the fxml file for the GUI and creates the stage to be displayed.
@@ -23,7 +24,7 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
-        stage.setScene(new Scene((root1), 500, 500));
+        stage.setScene(new Scene((root1), SCENE_WIDTH_HEIGHT, SCENE_WIDTH_HEIGHT));
         stage.setTitle("MainView");
         stage.show();
     }

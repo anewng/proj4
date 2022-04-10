@@ -5,14 +5,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import java.util.Optional;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Optional;
 import java.util.StringTokenizer;
 
 /**
@@ -24,19 +26,19 @@ public class DonutController {
     private OrderViewController orderViewController;
 
     //donut type list, so that user can select the type of donut to add to order
-    ObservableList<String> donutTypeList = FXCollections
+    private ObservableList<String> donutTypeList = FXCollections
             .observableArrayList("Donut Hole", "Yeast Donut", "Cake Donut");
 
     //quantity list, so that user can select the number of donuts to add to order
-    ObservableList<String> donutAmountList = FXCollections
+    private ObservableList<String> donutAmountList = FXCollections
             .observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
     //flavor lists depending on the type of donut
-    ObservableList<String> flavorsDonutHoleList = FXCollections
+    private ObservableList<String> flavorsDonutHoleList = FXCollections
             .observableArrayList("Yas", "Slay", "Purr");
-    ObservableList<String> flavorsYeastDonutList = FXCollections
+    private ObservableList<String> flavorsYeastDonutList = FXCollections
             .observableArrayList("Fungi", "E coli", "Salmonella");
-    ObservableList<String> flavorsCakeDonutList = FXCollections
+    private ObservableList<String> flavorsCakeDonutList = FXCollections
             .observableArrayList("Red Velvet", "Blueberry Chiffon", "Raspberry Jam Swirl");
 
     @FXML
@@ -52,7 +54,7 @@ public class DonutController {
     @FXML
     private AnchorPane anchorPane;
 
-    Order donutArrayList = new Order();
+    private Order donutArrayList = new Order();
 
     /**
      The initialize method configures preliminary settings to clarify GUI interactions.
