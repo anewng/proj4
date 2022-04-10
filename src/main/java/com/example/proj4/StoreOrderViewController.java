@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Optional;
 
+/**
+ The StoreOrderViewController class dictates the function of the store order view GUI.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class StoreOrderViewController {
     private static final double SALES_TAX = 0.06625;
 

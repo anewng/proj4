@@ -1,5 +1,11 @@
 package com.example.proj4;
 
+/**
+ The CakeDonut class is used to create, manipulate, and access CakeDonut objects.
+ A cake donut is a subclass of donut.
+ A cake donut's price can be accessed, and the cake donut can be converted to a string.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class CakeDonut extends Donut{
 
     private static final String FLAVOR_1 = "Red Velvet";

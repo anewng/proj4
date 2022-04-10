@@ -1,5 +1,11 @@
 package com.example.proj4;
 
+/**
+ The DonutHole class is used to create, manipulate, and access DonutHole objects.
+ A donut hole is a type of donut.
+ A donut hole's price can be accessed, and the donut hole can be converted to a string.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class DonutHole extends Donut{
     private static final String FLAVOR_1 = "Yas";
     private static final String FLAVOR_2 = "Slay";

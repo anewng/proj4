@@ -1,5 +1,9 @@
 package com.example.proj4;
 
+/**
+ The Customizable interface provides the behavior of classes that implements it to add and remove objects.
+ @author Annie Wang, Jasmine Flanders
+ */
 public interface Customizable {
     /**
      Denotes the behavior of adding objects

@@ -1,5 +1,11 @@
 package com.example.proj4;
 
+/**
+ The YeastDonut class is used to create, manipulate, and access YeastDonut objects.
+ A yeast donut is a type of donut.
+ A yeast donut's price can be accessed, and the yeast donut can be converted to a string.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class YeastDonut extends Donut{
 
     private static final String FLAVOR_1 = "Fungi";

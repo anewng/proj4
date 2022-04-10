@@ -1,5 +1,11 @@
 package com.example.proj4;
 
+/**
+ The MenuItem class is used to create, manipulate, and access MenuItem objects.
+ MenuItems can be created, and their quantities can be set and accessed.
+ The MenuItem can be converted to a string.
+ @author Annie Wang, Jasmine Flanders
+ */
 public abstract class MenuItem {
 
     private int quantity;
