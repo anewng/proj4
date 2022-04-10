@@ -1,5 +1,7 @@
 package com.example.proj4;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -10,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.StringTokenizer;
 
@@ -21,12 +22,16 @@ public class OrderViewController {
     private static final int AUTOMATIC_REMOVAL_INDEX = -1;
 
     public Order yourOrderArrayList = new Order();
-    @FXML
-    private AnchorPane anchorPane;
+
+    ObservableList<String> storeOrdersListView = FXCollections
+            .observableArrayList();
+
     @FXML
     private ListView yourOrders;
     @FXML
     private TextField subTotal, salesTax, total;
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     public void initialize(){
@@ -39,7 +44,7 @@ public class OrderViewController {
     public void updateListView(){
         yourOrders.getItems().clear();
         for(int i = 0; i < yourOrderArrayList.getOrderArray().size(); i ++){
-            yourOrders.getItems().add(yourOrderArrayList.getOrderArray().get(i));
+            yourOrders.getItems().add(yourOrderArrayList.getOrderArray().get(i).toString());
         }
     }
     @FXML
@@ -73,24 +78,13 @@ public class OrderViewController {
             confirmation.setContentText("Confirm order");
             Optional<ButtonType> result = confirmation.showAndWait();
             if (result.get() == ButtonType.OK) {
-                Order newOrder = new Order();
-                newOrder = yourOrderArrayList;
-
-                int lastIndex = storeOrderViewController.storeOrderArrayList.size() - 1;
-                if (storeOrderViewController.storeOrderArrayList.size() == 0) {
-                    yourOrderArrayList.setOrderNumber(1);
-                } else {
-                    yourOrderArrayList.setOrderNumber(storeOrderViewController.storeOrderArrayList
-                            .get(lastIndex).getOrderNumber() + 1);
-                }
-                storeOrderViewController.storeOrderArrayList.add(yourOrderArrayList);
-
-
+                storeOrderViewController.storeOrderArrayList.addObject(yourOrderArrayList);
                 yourOrderArrayList = new Order();
                 yourOrders.getItems().clear();
                 subTotal.clear();
                 salesTax.clear();
                 total.clear();
+
                 Stage stage = (Stage) anchorPane.getScene().getWindow();
                 stage.close();
             }
@@ -109,9 +103,9 @@ public class OrderViewController {
             String flavorSizeToken = "";
             String itemType = setItemType(string.nextToken());
 
-            if (itemType.equals("Coffee")) {
+            if(itemType.equals("Coffee")){
                 flavorSizeToken = string.nextToken(); // getting coffee flavor
-            } else if (itemType.equals("invalid item type")) {
+            } else if(itemType.equals("invalid item type")) {
                 return;
             } else {
                 string.nextToken();
@@ -120,12 +114,12 @@ public class OrderViewController {
             }
 
             int removalIndex = AUTOMATIC_REMOVAL_INDEX;
-            for (int i = 0; i < yourOrderArrayList.getOrderArray().size(); i++) {
-                if (yourOrderArrayList.getOrderArray().get(i) instanceof Coffee && itemType.equals("Coffee")
-                        && ((Coffee) yourOrderArrayList.getOrderArray().get(i)).getSize().equals(flavorSizeToken)) {
+            for(int i = 0; i < yourOrderArrayList.getOrderArray().size(); i++){
+                if(yourOrderArrayList.getOrderArray().get(i) instanceof Coffee && itemType.equals("Coffee")
+                        && ((Coffee) yourOrderArrayList.getOrderArray().get(i)).getSize().equals(flavorSizeToken)){
                     removalIndex = i;
-                } else if (yourOrderArrayList.getOrderArray().get(i) instanceof Donut && itemType.equals("Donut")
-                        && ((Donut) yourOrderArrayList.getOrderArray().get(i)).getFlavor().equals(flavorSizeToken)) {
+                } else if(yourOrderArrayList.getOrderArray().get(i) instanceof Donut && itemType.equals("Donut")
+                        && ((Donut) yourOrderArrayList.getOrderArray().get(i)).getFlavor().equals(flavorSizeToken)){
                     removalIndex = i;
                 }
             }

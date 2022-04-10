@@ -48,6 +48,8 @@ public class DonutController {
     private ListView donutOrderPreview;
     @FXML
     private TextField donutSubtotal;
+    @FXML
+    private AnchorPane anchorPane;
 
     Order donutArrayList = new Order();
 
@@ -129,15 +131,6 @@ public class DonutController {
         return NOT_FOUND;
     }
 
-    private int findFlavorIndex(String flavor){
-        for(int i = 0; i < donutArrayList.getOrderArray().size(); i++){
-            if(((Donut) donutArrayList.getOrderArray().get(i)).getFlavor().equals(flavor)){
-                return i;
-            }
-        }
-        return NOT_FOUND;
-    }
-
     @FXML
     protected void onRemoveSelectedButtonClick(ActionEvent event) {
         if (donutOrderPreview.getSelectionModel().getSelectedItem() == null) {
@@ -147,14 +140,20 @@ public class DonutController {
             error.show();
         } else {
             StringTokenizer string = new StringTokenizer(donutOrderPreview.getSelectionModel().getSelectedItem().toString());
-            string.nextToken(); //skipping the first token
+            String firstToken = string.nextToken(); //first toke = type of donut
             string.nextToken(); //skipping the second token
             String thirdToken = string.nextToken();
-
             String selectedFlavor = setFlavor(thirdToken); //set the flavor based on the third token
-            int removalIndex = findFlavorIndex(selectedFlavor);
 
-            donutArrayList.remove(removalIndex);
+            Donut newDonut = new DonutHole(selectedFlavor);
+            if (firstToken.equals("Donut")) {
+                newDonut = new DonutHole(selectedFlavor);
+            } else if (firstToken.equals("Yeast")) {
+                newDonut = new YeastDonut(selectedFlavor);
+            } else if (firstToken.equals("Cake")) {
+                newDonut = new CakeDonut(selectedFlavor);
+            }
+            donutArrayList.remove(newDonut);
 
             updateListView();
             updateSubtotal();

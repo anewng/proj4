@@ -22,65 +22,66 @@ import java.util.Optional;
 public class StoreOrderViewController {
     private static final double SALES_TAX = 0.06625;
 
-    public ArrayList<Order> storeOrderArrayList = new ArrayList<Order>();
+    public StoreOrders storeOrderArrayList = new StoreOrders();
     public Order selectedOrderList = new Order();
 
     ObservableList<String> orderNumbersList = FXCollections
             .observableArrayList();
-    @FXML
-    private AnchorPane anchorPane;
+
     @FXML
     private ListView storeOrders;
     @FXML
     private TextField total;
     @FXML
     private ComboBox orderNumber;
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         total.setEditable(false);
         resetComboBox();
     }
 
     @FXML
-    public void onOrderNumberSelected(Event itemStateChanged){
+    public void onOrderNumberSelected(Event itemStateChanged) {
         updateListView();
         updateTotalField();
     }
 
     @FXML
-    public void updateListView(){
+    public void updateListView() {
         storeOrders.getItems().clear();
-        if(orderNumber.getValue() == null){
+        if (orderNumber.getValue() == null) {
             return;
         }
-        int selectedOrderIndex = Integer.parseInt(orderNumber.getValue().toString());
-        selectedOrderList = findSelectedOrder(selectedOrderIndex);
+        int selectedOrderNumber = Integer.parseInt(orderNumber.getValue().toString());
+        selectedOrderList = findSelectedOrder(selectedOrderNumber);
 
         //displaying the selected order in the list view
-        for(int i = 0; i < selectedOrderList.getOrderArray().size(); i ++){
+        for (int i = 0; i < selectedOrderList.getOrderArray().size(); i++) {
             storeOrders.getItems().add(selectedOrderList.getOrderArray().get(i).toString());
         }
     }
 
-    private Order findSelectedOrder(int selectedOrderIndex){
+    private Order findSelectedOrder(int selectedOrderNumber) {
         //find the selected order by iterating through the store orders array and searching for orderNumber
-        for(int j = 0; j < storeOrderArrayList.size(); j++){
-            if(storeOrderArrayList.get(j).getOrderNumber() == selectedOrderIndex){
-                return storeOrderArrayList.get(j);
+        for (int j = 0; j < storeOrderArrayList.getOrders().size(); j++) {
+            if (storeOrderArrayList.getOrders().get(j).getOrderNumber() == selectedOrderNumber) {
+                return storeOrderArrayList.getOrders().get(j);
             }
         }
         return null;
     }
 
     @FXML
-    public void updateTotalField(){
+    public void updateTotalField() {
         total.clear();
         double totalDouble = 0;
-        if(selectedOrderList == null){
+        if (selectedOrderList == null) {
             return;
         }
-        for(int i = 0; i < selectedOrderList.getOrderArray().size(); i++){
+        for (int i = 0; i < selectedOrderList.getOrderArray().size(); i++) {
             totalDouble += selectedOrderList.getOrderArray().get(i).itemPrice()
                     * selectedOrderList.getOrderArray().get(i).getQuantity();
         }
@@ -110,17 +111,17 @@ public class StoreOrderViewController {
         }
     }
 
-    private void resetComboBox(){
+    private void resetComboBox() {
         orderNumber.getItems().clear();
-        for(int i = 0; i < storeOrderArrayList.size(); i++) {
-            orderNumbersList.add(String.valueOf(storeOrderArrayList.get(i).getOrderNumber()));
+        for (int i = 0; i < storeOrderArrayList.getOrders().size(); i++) {
+            orderNumbersList.add(String.valueOf(storeOrderArrayList.getOrders().get(i).getOrderNumber()));
         }
         orderNumber.setItems(orderNumbersList);
     }
 
     @FXML
     protected void onExportOrderButtonClick(ActionEvent event) throws IOException {
-        if (storeOrderArrayList.size() == 0) {
+        if (storeOrderArrayList.getOrders().size() == 0) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setContentText("No orders to export");
             error.show();
@@ -137,12 +138,12 @@ public class StoreOrderViewController {
                 File targetFile = chooser.showSaveDialog(stage); //get the reference of the target file
                 //write code to write to the file.
                 FileWriter fileWriter = new FileWriter(targetFile);
-                for (int i = 0; i < storeOrderArrayList.size(); i++) {
-                    fileWriter.write("Order #" + storeOrderArrayList.get(i).getOrderNumber() + ":\n");
-                    for (int j = 0; j < storeOrderArrayList.get(i).getOrderArray().size(); j++) {
-                        fileWriter.write("- " + storeOrderArrayList.get(i).getOrderArray().get(j).toString() + "\n");
+                for (int i = 0; i < storeOrderArrayList.getOrders().size(); i++) {
+                    fileWriter.write("Order #" + storeOrderArrayList.getOrders().get(i).getOrderNumber() + ":\n");
+                    for (int j = 0; j < storeOrderArrayList.getOrders().get(i).getOrderArray().size(); j++) {
+                        fileWriter.write("- " + storeOrderArrayList.getOrders().get(i).getOrderArray().get(j).toString() + "\n");
                     }
-                    double subtotalDouble = storeOrderArrayList.get(i).getSubtotal();
+                    double subtotalDouble = storeOrderArrayList.getOrders().get(i).getSubtotal();
                     DecimalFormat d = new DecimalFormat("'$'#,##0.00");
                     String subtotalString = d.format(subtotalDouble);
                     fileWriter.write("Subtotal: " + subtotalString + "\n");
@@ -162,5 +163,4 @@ public class StoreOrderViewController {
             }
         }
     }
-
 }

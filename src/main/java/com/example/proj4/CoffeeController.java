@@ -24,6 +24,8 @@ public class CoffeeController {
     private CheckBox cream, syrup, milk, caramel, whippedCream;
     @FXML
     private TextField coffeeSubtotal;
+    @FXML
+    private AnchorPane anchorPane;
 
     private Coffee coffee = new Coffee();
 
@@ -107,22 +109,35 @@ public class CoffeeController {
     private Coffee trackAddOns(Coffee coffee){
         if (cream.isSelected()) {
             coffee.addObject("cream");
+        } else if (!cream.isSelected()){
+            coffee.remove("cream");
         }
+
         if (syrup.isSelected()) {
             coffee.addObject("syrup");
+        } else if (!syrup.isSelected()){
+            coffee.remove("syrup");
         }
+
         if (milk.isSelected()) {
             coffee.addObject("milk");
+        } else if (!milk.isSelected()){
+            coffee.remove("milk");
         }
+
         if (caramel.isSelected()) {
             coffee.addObject("caramel");
+        } else if (!caramel.isSelected()){
+            coffee.remove("caramel");
         }
+
         if (whippedCream.isSelected()) {
-            coffee.addObject("whipped cream");
+            coffee.addObject("whippedCream");
+        } else if (!whippedCream.isSelected()){
+            coffee.remove("whippedCream");
         }
         return coffee;
     }
-
 
     public void setOrderViewController(OrderViewController controller) {
         orderViewController = controller;
