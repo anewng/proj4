@@ -14,6 +14,10 @@ public class Coffee extends MenuItem implements Customizable{
     private int addOnCount;
     private ArrayList<String> addOns = new ArrayList<String>();
 
+    /**
+     Returns the raw price of the coffee, excluding taxes
+     @return double the value of the price.
+     */
     @Override
     public double itemPrice() {
         double retPrice = 0;
@@ -32,14 +36,26 @@ public class Coffee extends MenuItem implements Customizable{
         return retPrice;
     }
 
+    /**
+     Returns the coffee's size.
+     @return string representing the size.
+     */
     public String getSize() {
         return size;
     }
 
+    /**
+     Sets the coffee's size.
+     @param size a String representing the size.
+     */
     public void setSize(String size) {
         this.size = size;
     }
 
+    /**
+     Converts a coffee to a string, with the type of item, size, and quantity.
+     @return string representation of a coffee.
+     */
     @Override
     public String toString() {
         String coffeeString = "Coffee, " + size + " (" + getQuantity() + ")";
@@ -47,11 +63,19 @@ public class Coffee extends MenuItem implements Customizable{
             coffeeString += ", add-ons: ";
         }
         for(int i = 0; i < addOnCount; i++){
-            coffeeString += addOns.get(i) + " ";
+            if(i == 0){
+                coffeeString += addOns.get(i);
+            } else {
+                coffeeString += " | " + addOns.get(i);
+            }
         }
         return coffeeString;
     }
 
+    /**
+     Adds an addon to the coffee order
+     @return boolean denoting if the addon was successfully added or not.
+     */
     @Override
     public boolean addObject(Object obj) {
         String addOn = (String) obj;
@@ -60,6 +84,10 @@ public class Coffee extends MenuItem implements Customizable{
         return true;
     }
 
+    /**
+     Removes an addon from the coffee order
+     @return boolean denoting if the addon was successfully removed or not.
+     */
     @Override
     public boolean remove(Object obj) {
         String addOn = (String) obj;

@@ -33,6 +33,9 @@ public class OrderViewController {
     @FXML
     private AnchorPane anchorPane;
 
+    /**
+     The initialize method configures preliminary settings to clarify GUI interactions.
+     */
     @FXML
     public void initialize(){
         subTotal.setEditable(false);
@@ -40,6 +43,9 @@ public class OrderViewController {
         total.setEditable(false);
     }
 
+    /**
+     Updates the list view display with all items in the current order.
+     */
     @FXML
     public void updateListView(){
         yourOrders.getItems().clear();
@@ -47,6 +53,10 @@ public class OrderViewController {
             yourOrders.getItems().add(yourOrderArrayList.getOrderArray().get(i).toString());
         }
     }
+
+    /**
+     Updates the subtotal, tax, and total text fields with calculated prices.
+     */
     @FXML
     public void updateTotals(){
         double subtotalDouble = 0;
@@ -67,6 +77,10 @@ public class OrderViewController {
         total.setText(totalString);
     }
 
+    /**
+     Adds to order to the cart based on user input in the GUI
+     @param event the method is executed when the user clicks the place order button
+     */
     @FXML
     protected void onPlaceOrderButtonClick(ActionEvent event) {
         if (yourOrders.getItems().size() == 0) {
@@ -91,6 +105,10 @@ public class OrderViewController {
         }
     }
 
+    /**
+     Removes menu item from the order based on user input in the GUI
+     @param event the method is executed when the user clicks the remove selected item button
+     */
     @FXML
     protected void onRemoveSelectedButtonClick(ActionEvent event) {
         if (yourOrders.getSelectionModel().getSelectedItem() == null) {
@@ -130,6 +148,11 @@ public class OrderViewController {
         }
     }
 
+    /**
+     Identifies and sets the menu item type based on the first token
+     @param firstToken the token that indicates the specific menu item
+     @return String the full menu item type
+     */
     private String setItemType(String firstToken){
         if(firstToken.equals("Donut") || firstToken.equals("Yeast") || firstToken.equals("Cake")){
             return "Donut";
@@ -140,6 +163,11 @@ public class OrderViewController {
         }
     }
 
+    /**
+     Identifies and sets the donut flavor based on the third token
+     @param thirdToken the token that indicates the specific donut flavor
+     @return String the full donut flavor
+     */
     private String setDonutFlavor(String thirdToken){
         if(thirdToken.equals("E")){
             return "E coli";
@@ -154,6 +182,10 @@ public class OrderViewController {
         }
     }
 
+    /**
+     Connects the current controller with the store order view controller
+     @param controller the controller that is to be connected with the current one
+     */
     public void setStoreOrderViewController(StoreOrderViewController controller) {
         storeOrderViewController = controller;
     }

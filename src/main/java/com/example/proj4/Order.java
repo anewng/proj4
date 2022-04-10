@@ -12,22 +12,41 @@ public class Order implements Customizable {
 
     private static final int AUTOMATIC_REMOVAL_INDEX = -1;
 
+    /**
+     Constructor creates an Order object.
+     */
     public Order(){
         order = new ArrayList<MenuItem>();
     }
 
+    /**
+     Sets the order number of the Order object.
+     @param orderNumber number of the Order object
+     */
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
     }
 
+    /**
+     Gets the order number of the Order object.
+     @return int number of the Order object
+     */
     public int getOrderNumber() {
         return orderNumber;
     }
 
+    /**
+     Gets the order array corresponding to the Order object.
+     @return ArrayList<MenuItem> order array
+     */
     public ArrayList<MenuItem> getOrderArray(){
         return order;
     }
 
+    /**
+     Adds a menu item to the order
+     @return boolean denoting if the addition was successful or not.
+     */
     @Override
     public boolean addObject(Object obj) {
         MenuItem newOrder = (MenuItem) obj;
@@ -35,6 +54,10 @@ public class Order implements Customizable {
         return true;
     }
 
+    /**
+     Removes a menu item from the order
+     @return boolean denoting if the removal was successful or not.
+     */
     @Override
     public boolean remove(Object obj) {
         String itemType = "", flavorSizeToken = "";
@@ -71,20 +94,10 @@ public class Order implements Customizable {
         return false;
     }
 
-    private String setDonutFlavor(String thirdToken){
-        if(thirdToken.equals("E")){
-            return "E coli";
-        } else if (thirdToken.equals("Red")) {
-            return "Red Velvet";
-        } else if (thirdToken.equals("Blueberry")) {
-            return "Blueberry Chiffon";
-        } else if (thirdToken.equals("Raspberry")) {
-            return "Raspberry Jam Swirl";
-        } else {
-            return thirdToken;
-        }
-    }
-
+    /**
+     Calculates the raw, pre-tax subtotal of the order, according to the quantity and price of each menu item
+     @return double the calculated subtotal.
+     */
     public double getSubtotal(){
         double subtotal = 0;
         for (int i = 0; i < order.size(); i++) {

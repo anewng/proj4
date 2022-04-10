@@ -27,11 +27,18 @@ public class CoffeeController {
 
     private Coffee coffee = new Coffee();
 
+    /**
+     The initialize method configures preliminary settings to clarify GUI interactions.
+     */
     @FXML
     private void initialize(){
         coffeeSubtotal.setEditable(false);
     }
 
+    /**
+     Sets the coffee size based on user input in the GUI
+     @param event the method is executed when the user selects a size from the dropdown menu
+     */
     @FXML
     protected void onCoffeeSizeSelected(ActionEvent event) {
         if(coffeeSizeSelect.getValue() != null){
@@ -40,6 +47,10 @@ public class CoffeeController {
         updateSubtotalAndCoffee();
     }
 
+    /**
+     Sets the coffee order quantity based on user input in the GUI
+     @param event the method is executed when the user selects the quantity from the dropdown menu
+     */
     @FXML
     protected void onCoffeeQuantitySelected(ActionEvent event) {
         if(coffeeAmountSelect.getValue() != null){
@@ -48,6 +59,10 @@ public class CoffeeController {
         updateSubtotalAndCoffee();
     }
 
+    /**
+     Adds the coffee order to the cart when the user clicks on the add button
+     @param event the method is executed when the user clicks on the button to add to the cart
+     */
     @FXML
     protected void onAddToCartButtonClick(ActionEvent event) {
         if (coffeeSizeSelect.getValue() == null) {
@@ -87,11 +102,18 @@ public class CoffeeController {
         }
     }
 
+    /**
+     Makes necessary updates based on the add-ons that are checked
+     @param event the method is executed when the user checks or unchecks the add-on check boxes
+     */
     @FXML
     protected void onAddOnsChecked(ActionEvent event) {
         updateSubtotalAndCoffee();
     }
 
+    /**
+     Updates the subtotal text field and coffee order based on changes in the add-on checkboxes
+     */
     private void updateSubtotalAndCoffee() {
         if(coffeeSizeSelect.getValue() != null){
             coffee.setSize(coffeeSizeSelect.getValue().toString());
@@ -104,6 +126,10 @@ public class CoffeeController {
 
     }
 
+    /**
+     Tracks the addons and updates the coffee order accordingly
+     @param coffee the coffee order that is to be updated based on the checked add-in boxes
+     */
     private Coffee trackAddOns(Coffee coffee){
         if (cream.isSelected()) {
             coffee.addObject("cream");
@@ -130,13 +156,17 @@ public class CoffeeController {
         }
 
         if (whippedCream.isSelected()) {
-            coffee.addObject("whippedCream");
+            coffee.addObject("whipped cream");
         } else if (!whippedCream.isSelected()){
-            coffee.remove("whippedCream");
+            coffee.remove("whipped cream");
         }
         return coffee;
     }
 
+    /**
+     Connects the current controller with an order view controller
+     @param controller the controller that is to be connected with the current one
+     */
     public void setOrderViewController(OrderViewController controller) {
         orderViewController = controller;
     }

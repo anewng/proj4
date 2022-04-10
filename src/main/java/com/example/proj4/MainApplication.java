@@ -11,6 +11,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApplication extends Application {
+
+    /**
+     The start method loads the fxml file for the GUI and creates the stage to be displayed.
+     @param stage the stage being launched.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
@@ -20,14 +25,10 @@ public class MainApplication extends Application {
         stage.show();
     }
 
-    public class donutButtonHandler implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent actionEvent) {
-
-        }
-    }
-
+    /**
+     Main method for MainApplication.
+     Launches the program.
+     */
     public static void main(String[] args) {
         launch();
     }

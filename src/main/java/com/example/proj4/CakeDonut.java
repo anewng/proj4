@@ -1,7 +1,5 @@
 package com.example.proj4;
 
-import java.text.DecimalFormat;
-
 public class CakeDonut extends Donut{
 
     private static final String FLAVOR_1 = "Red Velvet";
@@ -10,16 +8,27 @@ public class CakeDonut extends Donut{
 
     private static final double CAKE_PRICE = 1.79;
 
+    /**
+     Constructor creates a CakeDonut object.
+     @param flavor the flavor of the Cake Donut
+     */
     public CakeDonut(String flavor) {
         super(flavor);
-        price = CAKE_PRICE;
     }
 
+    /**
+     Returns the raw price of the cake donut, excluding taxes
+     @return double the value of the price.
+     */
     @Override
     public double itemPrice() {
         return CAKE_PRICE;
     }
 
+    /**
+     Converts a cake donut to a string, with type of donut, flavor, and quantity.
+     @return string representation of cake donut.
+     */
     @Override
     public String toString() {
         return "Cake Donut, " + getFlavor() + " (" + getQuantity() + ")";

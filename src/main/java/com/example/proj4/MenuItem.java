@@ -6,10 +6,12 @@ public abstract class MenuItem {
     protected static final double INVALID_CASE = -1;
     protected static final String INVALID_TYPE = "";
 
-    public MenuItem() {}
-
     public abstract double itemPrice();
 
+    /**
+     Converts a menu item to a string, depending on if it is a donut or coffee item
+     @return string representation of the menu item.
+     */
     @Override
     public String toString() {
         if (this instanceof Coffee) {
@@ -23,10 +25,17 @@ public abstract class MenuItem {
         }
     }
 
+    /**
+     Sets the quantity of the Menu Item
+     */
     public void setQuantity(int amount){
         quantity = amount;
     }
 
+    /**
+     Gets the quantity of the Menu Item
+     @return int returns the quantity
+     */
     public int getQuantity(){
         return quantity;
     }

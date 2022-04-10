@@ -28,6 +28,10 @@ public class MainController {
     private Scene orderViewScene;
     private Scene storeOrderViewScene;
 
+
+    /**
+     The initialize method configures preliminary settings to clarify GUI interactions.
+     */
     @FXML
     private void initialize() throws IOException {
         donutLoader = new FXMLLoader(getClass().getResource("donut-view.fxml"));
@@ -56,6 +60,10 @@ public class MainController {
 
     }
 
+    /**
+     Opens new window and sets the stage for Donut orders
+     @param event the method is executed when the user clicks on the Donut Order button
+     */
     @FXML
     protected void onDonutButtonClick(ActionEvent event) throws IOException {
         try {
@@ -68,6 +76,10 @@ public class MainController {
         }
     }
 
+    /**
+     Opens new window and sets the stage for Coffee orders
+     @param event the method is executed when the user clicks on the Coffee Order button
+     */
     @FXML
     protected void onCoffeeButtonClick(ActionEvent event) throws IOException {
         //coffee size list, so that user can select the size of coffee to add to order
@@ -90,6 +102,10 @@ public class MainController {
         }
     }
 
+    /**
+     Opens new window and sets the stage for editing the current order
+     @param event the method is executed when the user clicks on the Your Order button
+     */
     @FXML
     protected void onYourOrderButtonClick(ActionEvent event) throws IOException {
         try {
@@ -104,6 +120,10 @@ public class MainController {
         }
     }
 
+    /**
+     Opens new window and sets the stage for editing the store order
+     @param event the method is executed when the user clicks on the Store Order button
+     */
     @FXML
     protected void onStoreOrderButtonClick(ActionEvent event) throws IOException {
         try {
