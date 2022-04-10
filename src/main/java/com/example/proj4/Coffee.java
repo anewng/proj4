@@ -1,6 +1,5 @@
 package com.example.proj4;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Coffee extends MenuItem implements Customizable{
@@ -10,36 +9,62 @@ public class Coffee extends MenuItem implements Customizable{
     private static final double VENTI_PRICE = 2.89;
     private static final double ADD_IN_PRICE = 0.30;
 
+    private static final double INVALID_CASE = -1;
+
+
     private String size;
     private int addOnCount;
     private ArrayList<String> addOns = new ArrayList<String>();
 
+    /**
+     Returns the raw price of the coffee, excluding taxes
+     @return double the value of the price.
+     */
     @Override
     public double itemPrice() {
-        double retPrice = 0;
         if (this.size == "Short") {
-            retPrice += SHORT_PRICE;
-        } else if (this.size == "Tall") {
-            retPrice += TALL_PRICE;
-        } else if (this.size == "Grande") {
-            retPrice += GRANDE_PRICE;
-        } else if (this.size == "Venti") {
-            retPrice += VENTI_PRICE;
-        } else {
-            return INVALID_CASE;
+            return SHORT_PRICE + (this.addOnCount * ADD_IN_PRICE);
         }
-        retPrice += (this.addOnCount * ADD_IN_PRICE);
-        return retPrice;
+        if (this.size == "Tall") {
+            return TALL_PRICE + (this.addOnCount * ADD_IN_PRICE);
+        }
+        if (this.size == "Grande") {
+            return GRANDE_PRICE + (this.addOnCount * ADD_IN_PRICE);
+        }
+        if (this.size == "Venti") {
+            return VENTI_PRICE + (this.addOnCount * ADD_IN_PRICE);
+        }
+        return INVALID_CASE;
     }
 
+    /**
+     Returns the coffee's size.
+     @return string representing the size.
+     */
     public String getSize() {
         return size;
     }
 
+    /**
+     Sets the coffee's size.
+     @param size a String representing the size.
+     */
     public void setSize(String size) {
         this.size = size;
     }
 
+    /**
+     Sets the coffee's addOn count.
+     @param addOnCt a String representing the add on count.
+     */
+    public void setAddOnCount(int addOnCt) {
+        this.addOnCount = addOnCt;
+    }
+
+    /**
+     Converts a coffee to a string, with the type of item, size, and quantity.
+     @return string representation of a coffee.
+     */
     @Override
     public String toString() {
         String coffeeString = "Coffee, " + size + " (" + getQuantity() + ")";
@@ -47,11 +72,19 @@ public class Coffee extends MenuItem implements Customizable{
             coffeeString += ", add-ons: ";
         }
         for(int i = 0; i < addOnCount; i++){
-            coffeeString += addOns.get(i) + " ";
+            if(i == 0){
+                coffeeString += addOns.get(i);
+            } else {
+                coffeeString += " | " + addOns.get(i);
+            }
         }
         return coffeeString;
     }
 
+    /**
+     Adds an addon to the coffee order
+     @return boolean denoting if the addon was successfully added or not.
+     */
     @Override
     public boolean addObject(Object obj) {
         String addOn = (String) obj;
@@ -60,6 +93,10 @@ public class Coffee extends MenuItem implements Customizable{
         return true;
     }
 
+    /**
+     Removes an addon from the coffee order
+     @return boolean denoting if the addon was successfully removed or not.
+     */
     @Override
     public boolean remove(Object obj) {
         String addOn = (String) obj;

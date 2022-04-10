@@ -21,7 +21,7 @@ public class OrderViewController {
     private static final double SALES_TAX = 0.06625;
     private static final int AUTOMATIC_REMOVAL_INDEX = -1;
 
-    public Order yourOrderArrayList = new Order();
+    private Order yourOrderArrayList = new Order();
 
     ObservableList<String> storeOrdersListView = FXCollections
             .observableArrayList();
@@ -33,6 +33,9 @@ public class OrderViewController {
     @FXML
     private AnchorPane anchorPane;
 
+    /**
+     The initialize method configures preliminary settings to clarify GUI interactions.
+     */
     @FXML
     public void initialize(){
         subTotal.setEditable(false);
@@ -40,6 +43,17 @@ public class OrderViewController {
         total.setEditable(false);
     }
 
+    /**
+     Gets the order array list.
+     @return Order the orders list
+     */
+    public Order getYourOrderArrayList(){
+        return yourOrderArrayList;
+    }
+
+    /**
+     Updates the list view display with all items in the current order.
+     */
     @FXML
     public void updateListView(){
         yourOrders.getItems().clear();
@@ -47,6 +61,10 @@ public class OrderViewController {
             yourOrders.getItems().add(yourOrderArrayList.getOrderArray().get(i).toString());
         }
     }
+
+    /**
+     Updates the subtotal, tax, and total text fields with calculated prices.
+     */
     @FXML
     public void updateTotals(){
         double subtotalDouble = 0;
@@ -67,6 +85,10 @@ public class OrderViewController {
         total.setText(totalString);
     }
 
+    /**
+     Adds to order to the cart based on user input in the GUI
+     @param event the method is executed when the user clicks the place order button
+     */
     @FXML
     protected void onPlaceOrderButtonClick(ActionEvent event) {
         if (yourOrders.getItems().size() == 0) {
@@ -78,7 +100,7 @@ public class OrderViewController {
             confirmation.setContentText("Confirm order");
             Optional<ButtonType> result = confirmation.showAndWait();
             if (result.get() == ButtonType.OK) {
-                storeOrderViewController.storeOrderArrayList.addObject(yourOrderArrayList);
+                storeOrderViewController.getStoreOrderArrayList().addObject(yourOrderArrayList);
                 yourOrderArrayList = new Order();
                 yourOrders.getItems().clear();
                 subTotal.clear();
@@ -91,6 +113,10 @@ public class OrderViewController {
         }
     }
 
+    /**
+     Removes menu item from the order based on user input in the GUI
+     @param event the method is executed when the user clicks the remove selected item button
+     */
     @FXML
     protected void onRemoveSelectedButtonClick(ActionEvent event) {
         if (yourOrders.getSelectionModel().getSelectedItem() == null) {
@@ -113,16 +139,7 @@ public class OrderViewController {
                 flavorSizeToken = setDonutFlavor(flavorSizeToken);
             }
 
-            int removalIndex = AUTOMATIC_REMOVAL_INDEX;
-            for(int i = 0; i < yourOrderArrayList.getOrderArray().size(); i++){
-                if(yourOrderArrayList.getOrderArray().get(i) instanceof Coffee && itemType.equals("Coffee")
-                        && ((Coffee) yourOrderArrayList.getOrderArray().get(i)).getSize().equals(flavorSizeToken)){
-                    removalIndex = i;
-                } else if(yourOrderArrayList.getOrderArray().get(i) instanceof Donut && itemType.equals("Donut")
-                        && ((Donut) yourOrderArrayList.getOrderArray().get(i)).getFlavor().equals(flavorSizeToken)){
-                    removalIndex = i;
-                }
-            }
+            int removalIndex = findRemovalIndex(itemType, flavorSizeToken);
             yourOrderArrayList.getOrderArray().remove(removalIndex);
 
             updateListView();
@@ -130,6 +147,31 @@ public class OrderViewController {
         }
     }
 
+    /**
+     Searches the order list to find the index that corresponds with the item type and flavor size token
+     @param itemType indicates if the item is Coffee or Donut
+     @param flavorSizeToken indicates the flavor or size based on if the item is Coffee or Donut
+     @return int the index of the item, if found. if not found, returns the automatic removal index
+     */
+    private int findRemovalIndex(String itemType, String flavorSizeToken){
+        int removalIndex = AUTOMATIC_REMOVAL_INDEX;
+        for(int i = 0; i < yourOrderArrayList.getOrderArray().size(); i++){
+            if(yourOrderArrayList.getOrderArray().get(i) instanceof Coffee && itemType.equals("Coffee")
+                    && ((Coffee) yourOrderArrayList.getOrderArray().get(i)).getSize().equals(flavorSizeToken)){
+                removalIndex = i;
+            } else if(yourOrderArrayList.getOrderArray().get(i) instanceof Donut && itemType.equals("Donut")
+                    && ((Donut) yourOrderArrayList.getOrderArray().get(i)).getFlavor().equals(flavorSizeToken)){
+                removalIndex = i;
+            }
+        }
+        return removalIndex;
+    }
+
+    /**
+     Identifies and sets the menu item type based on the first token
+     @param firstToken the token that indicates the specific menu item
+     @return String the full menu item type
+     */
     private String setItemType(String firstToken){
         if(firstToken.equals("Donut") || firstToken.equals("Yeast") || firstToken.equals("Cake")){
             return "Donut";
@@ -140,6 +182,11 @@ public class OrderViewController {
         }
     }
 
+    /**
+     Identifies and sets the donut flavor based on the third token
+     @param thirdToken the token that indicates the specific donut flavor
+     @return String the full donut flavor
+     */
     private String setDonutFlavor(String thirdToken){
         if(thirdToken.equals("E")){
             return "E coli";
@@ -154,6 +201,10 @@ public class OrderViewController {
         }
     }
 
+    /**
+     Connects the current controller with the store order view controller
+     @param controller the controller that is to be connected with the current one
+     */
     public void setStoreOrderViewController(StoreOrderViewController controller) {
         storeOrderViewController = controller;
     }

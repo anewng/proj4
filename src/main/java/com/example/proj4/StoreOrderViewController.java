@@ -13,17 +13,15 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.file.attribute.AclEntryType;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class StoreOrderViewController {
     private static final double SALES_TAX = 0.06625;
 
-    public StoreOrders storeOrderArrayList = new StoreOrders();
-    public Order selectedOrderList = new Order();
+    private int selectedOrderIndex;
+    private StoreOrders storeOrderArrayList = new StoreOrders();
+    private Order selectedOrderList = new Order();
 
     ObservableList<String> orderNumbersList = FXCollections
             .observableArrayList();
@@ -37,18 +35,36 @@ public class StoreOrderViewController {
     @FXML
     private AnchorPane anchorPane;
 
+    /**
+     The initialize method configures preliminary settings to clarify GUI interactions.
+     */
     @FXML
     public void initialize() {
         total.setEditable(false);
         resetComboBox();
     }
 
+    /**
+     Gets the store order array list.
+     @return Order the store orders list
+     */
+    public StoreOrders getStoreOrderArrayList(){
+        return storeOrderArrayList;
+    }
+
+    /**
+     Updates various parameters based on user selections on the GUI
+     @param itemStateChanged the method is executed when the user modifies the order number selection
+     */
     @FXML
     public void onOrderNumberSelected(Event itemStateChanged) {
         updateListView();
         updateTotalField();
     }
 
+    /**
+     Updates the list view of current order based on the order number selection
+     */
     @FXML
     public void updateListView() {
         storeOrders.getItems().clear();
@@ -64,16 +80,24 @@ public class StoreOrderViewController {
         }
     }
 
+    /**
+     Finds the selected order by iterating through the store orders array and searching for the order number
+     @param selectedOrderNumber the selected order number to search for
+     @return Order the order item that matches with the selected order number
+     */
     private Order findSelectedOrder(int selectedOrderNumber) {
-        //find the selected order by iterating through the store orders array and searching for orderNumber
         for (int j = 0; j < storeOrderArrayList.getOrders().size(); j++) {
             if (storeOrderArrayList.getOrders().get(j).getOrderNumber() == selectedOrderNumber) {
+                selectedOrderIndex = j;
                 return storeOrderArrayList.getOrders().get(j);
             }
         }
         return null;
     }
 
+    /**
+     Updates the subtotal, tax, and total text fields with calculated prices.
+     */
     @FXML
     public void updateTotalField() {
         total.clear();
@@ -93,6 +117,9 @@ public class StoreOrderViewController {
         total.setText(totalString);
     }
 
+    /**
+     Cancels an order based on user selections in the GUI
+     */
     @FXML
     protected void onCancelOrderButtonClick(ActionEvent event) {
         if (storeOrders.getSelectionModel().getSelectedItem() == null) {
@@ -103,14 +130,21 @@ public class StoreOrderViewController {
         } else {
             storeOrders.getItems().clear();
             total.clear();
+
             selectedOrderList = findSelectedOrder(Integer.parseInt(orderNumber.getValue().toString()));
             storeOrderArrayList.remove(selectedOrderList);
-            selectedOrderList = null;
+            orderNumbersList.remove(selectedOrderIndex);
+            storeOrders.getItems().clear(); //clearing the list view
             resetComboBox();
+
+            selectedOrderList = new Order();
             updateTotalField();
         }
     }
 
+    /**
+     Resets the order number selection options based on recent updates to store orders
+     */
     private void resetComboBox() {
         orderNumber.getItems().clear();
         for (int i = 0; i < storeOrderArrayList.getOrders().size(); i++) {
@@ -119,6 +153,9 @@ public class StoreOrderViewController {
         orderNumber.setItems(orderNumbersList);
     }
 
+    /**
+     Exports all current store orders into a text file.
+     */
     @FXML
     protected void onExportOrderButtonClick(ActionEvent event) throws IOException {
         if (storeOrderArrayList.getOrders().size() == 0) {
@@ -136,7 +173,7 @@ public class StoreOrderViewController {
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
                 Stage stage = new Stage();
                 File targetFile = chooser.showSaveDialog(stage); //get the reference of the target file
-                //write code to write to the file.
+
                 FileWriter fileWriter = new FileWriter(targetFile);
                 for (int i = 0; i < storeOrderArrayList.getOrders().size(); i++) {
                     fileWriter.write("Order #" + storeOrderArrayList.getOrders().get(i).getOrderNumber() + ":\n");
