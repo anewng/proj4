@@ -3,8 +3,7 @@ package com.example.proj4;
 public abstract class MenuItem {
 
     private int quantity;
-    protected static final double INVALID_CASE = -1;
-    protected static final String INVALID_TYPE = "";
+    private static final String INVALID_TYPE = "";
 
     public abstract double itemPrice();
 

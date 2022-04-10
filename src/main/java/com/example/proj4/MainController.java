@@ -28,7 +28,6 @@ public class MainController {
     private Scene orderViewScene;
     private Scene storeOrderViewScene;
 
-
     /**
      The initialize method configures preliminary settings to clarify GUI interactions.
      */
@@ -95,8 +94,8 @@ public class MainController {
             stage.setScene(coffeeViewScene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
-            coffeeController.coffeeSizeSelect.setItems(coffeeSizeList);
-            coffeeController.coffeeAmountSelect.setItems(coffeeAmountList);
+            coffeeController.getCoffeeSizeSelect().setItems(coffeeSizeList);
+            coffeeController.getCoffeeAmountSelect().setItems(coffeeAmountList);
         } catch(Exception e) {
             e.printStackTrace();
         }

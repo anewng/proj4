@@ -13,20 +13,15 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.file.attribute.AclEntryType;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class StoreOrderViewController {
     private static final double SALES_TAX = 0.06625;
-    private static final int NOT_FOUND = -1;
 
     private int selectedOrderIndex;
-
-    public StoreOrders storeOrderArrayList = new StoreOrders();
-    public Order selectedOrderList = new Order();
+    private StoreOrders storeOrderArrayList = new StoreOrders();
+    private Order selectedOrderList = new Order();
 
     ObservableList<String> orderNumbersList = FXCollections
             .observableArrayList();
@@ -47,6 +42,14 @@ public class StoreOrderViewController {
     public void initialize() {
         total.setEditable(false);
         resetComboBox();
+    }
+
+    /**
+     Gets the store order array list.
+     @return Order the store orders list
+     */
+    public StoreOrders getStoreOrderArrayList(){
+        return storeOrderArrayList;
     }
 
     /**
@@ -129,29 +132,10 @@ public class StoreOrderViewController {
             total.clear();
 
             selectedOrderList = findSelectedOrder(Integer.parseInt(orderNumber.getValue().toString()));
-            System.out.println("\n***********************************************************\n" +
-                    "removal index: " + selectedOrderIndex +
-                    "\nSELECTED LIST AT INDEX:\n" + selectedOrderList.toString());
-            System.out.println("\nLIST BEFORE REMOVAL:\n" + storeOrderArrayList.toString());
             storeOrderArrayList.remove(selectedOrderList);
-            System.out.println("\nCURRENT ORDER ARRAY LIST:\n" + storeOrderArrayList.toString());
-
-            System.out.println("\nORDER NUMBER list: ");
-            for(int i = 0; i < orderNumbersList.size(); i ++){
-                System.out.print(orderNumbersList.get(i) + " ");
-            }
             orderNumbersList.remove(selectedOrderIndex);
-            System.out.println("\norder number list AFTER REMOVAL: ");
-            for(int i = 0; i < orderNumbersList.size(); i ++){
-                System.out.print(orderNumbersList.get(i) + " ");
-            }
-
             storeOrders.getItems().clear(); //clearing the list view
             resetComboBox();
-            System.out.println("\ncombo box options AFTER REMOVAL: ");
-            for(int i = 0; i < orderNumber.getItems().size(); i ++){
-                System.out.print(orderNumber.getItems().get(i).toString() + " ");
-            }
 
             selectedOrderList = new Order();
             updateTotalField();

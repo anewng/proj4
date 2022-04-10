@@ -1,16 +1,10 @@
 package com.example.proj4;
 
-import javafx.scene.control.Menu;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class Order implements Customizable {
     private ArrayList<MenuItem> order;
     private int orderNumber;
-
-    private static final int AUTOMATIC_REMOVAL_INDEX = -1;
 
     /**
      Constructor creates an Order object.
@@ -105,13 +99,5 @@ public class Order implements Customizable {
                     * order.get(i).getQuantity();
         }
         return subtotal;
-    }
-
-    public String toString(){
-        String string = "";
-        for(int i = 0; i < order.size(); i++){
-            string += order.get(i).toString() + "\n";
-        }
-        return string;
     }
 }

@@ -15,9 +15,9 @@ public class CoffeeController {
     private OrderViewController orderViewController;
 
     @FXML
-    public ComboBox coffeeSizeSelect;
+    private ComboBox coffeeSizeSelect;
     @FXML
-    public ComboBox coffeeAmountSelect;
+    private ComboBox coffeeAmountSelect;
     @FXML
     private CheckBox cream, syrup, milk, caramel, whippedCream;
     @FXML
@@ -33,6 +33,22 @@ public class CoffeeController {
     @FXML
     private void initialize(){
         coffeeSubtotal.setEditable(false);
+    }
+
+    /**
+     Gets the selected coffee size.
+     @return ComboBox the combo box of selections for the coffee size
+     */
+    public ComboBox getCoffeeSizeSelect(){
+        return coffeeSizeSelect;
+    }
+
+    /**
+     Gets the selected coffee amount.
+     @return ComboBox the combo box of selections for the coffee amount
+     */
+    public ComboBox getCoffeeAmountSelect(){
+        return coffeeAmountSelect;
     }
 
     /**
@@ -80,7 +96,7 @@ public class CoffeeController {
             confirmation.setContentText("Confirm order addition");
             Optional<ButtonType> result = confirmation.showAndWait();
             if (result.get() == ButtonType.OK) {
-                orderViewController.yourOrderArrayList.getOrderArray().add(coffee);
+                orderViewController.getYourOrderArrayList().getOrderArray().add(coffee);
 
                 coffeeSizeSelect.setValue(null);
                 coffeeAmountSelect.setValue(null);
@@ -197,5 +213,4 @@ public class CoffeeController {
     public void setOrderViewController(OrderViewController controller) {
         orderViewController = controller;
     }
-
-    }
+}

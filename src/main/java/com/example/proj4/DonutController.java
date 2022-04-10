@@ -36,11 +36,11 @@ public class DonutController {
             .observableArrayList("Red Velvet", "Blueberry Chiffon", "Raspberry Jam Swirl");
 
     @FXML
-    public ComboBox donutTypeSelect;
+    private ComboBox donutTypeSelect;
     @FXML
-    public ComboBox donutFlavorSelect;
+    private ComboBox donutFlavorSelect;
     @FXML
-    public ComboBox donutAmountSelect;
+    private ComboBox donutAmountSelect;
     @FXML
     private ListView donutOrderPreview;
     @FXML
@@ -101,25 +101,32 @@ public class DonutController {
             error.setContentText("No amount selected");
             error.show();
         } else{
-            Donut newDonut = new DonutHole("");
-            if (donutTypeSelect.getValue().toString().equals("Donut Hole")) {
-                newDonut = new DonutHole(donutFlavorSelect.getValue().toString());
-            } else if(donutTypeSelect.getValue().toString().equals("Yeast Donut")) {
-                newDonut = new YeastDonut(donutFlavorSelect.getValue().toString());
-            } else if(donutTypeSelect.getValue().toString().equals("Cake Donut")) {
-                newDonut = new CakeDonut(donutFlavorSelect.getValue().toString());
-            }
-            newDonut.setQuantity(Integer.parseInt(donutAmountSelect.getValue().toString()));
-            if (findDonutIndex(newDonut) == NOT_FOUND){
-                donutArrayList.getOrderArray().add(newDonut);
-            } else {
-                int oldAmount = donutArrayList.getOrderArray().get(findDonutIndex(newDonut)).getQuantity();
-                donutArrayList.getOrderArray().get(findDonutIndex(newDonut)).setQuantity(oldAmount + newDonut.getQuantity());
-            }
-
-            updateListView();
-            updateSubtotal();
+            executeAddToCart();
         }
+    }
+
+    /**
+     Adds a donut to the cart once all user inputs into the GUI are valid and present
+     */
+    private void executeAddToCart(){
+        Donut newDonut = new DonutHole("");
+        if (donutTypeSelect.getValue().toString().equals("Donut Hole")) {
+            newDonut = new DonutHole(donutFlavorSelect.getValue().toString());
+        } else if(donutTypeSelect.getValue().toString().equals("Yeast Donut")) {
+            newDonut = new YeastDonut(donutFlavorSelect.getValue().toString());
+        } else if(donutTypeSelect.getValue().toString().equals("Cake Donut")) {
+            newDonut = new CakeDonut(donutFlavorSelect.getValue().toString());
+        }
+        newDonut.setQuantity(Integer.parseInt(donutAmountSelect.getValue().toString()));
+        if (findDonutIndex(newDonut) == NOT_FOUND){
+            donutArrayList.getOrderArray().add(newDonut);
+        } else {
+            int oldAmount = donutArrayList.getOrderArray().get(findDonutIndex(newDonut)).getQuantity();
+            donutArrayList.getOrderArray().get(findDonutIndex(newDonut)).setQuantity(oldAmount + newDonut.getQuantity());
+        }
+
+        updateListView();
+        updateSubtotal();
     }
 
     /**
@@ -234,7 +241,7 @@ public class DonutController {
             Optional<ButtonType> result = confirmation.showAndWait();
             if (result.get() == ButtonType.OK) {
                 for (int i = 0; i < donutArrayList.getOrderArray().size(); i++) {
-                    orderViewController.yourOrderArrayList.addObject(donutArrayList.getOrderArray().get(i));
+                    orderViewController.getYourOrderArrayList().addObject(donutArrayList.getOrderArray().get(i));
                 }
                 donutTypeSelect.setValue(null);
                 donutFlavorSelect.setValue(null);

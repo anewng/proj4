@@ -10,6 +10,9 @@ public class Coffee extends MenuItem implements Customizable{
     private static final double VENTI_PRICE = 2.89;
     private static final double ADD_IN_PRICE = 0.30;
 
+    private static final double INVALID_CASE = -1;
+
+
     private String size;
     private int addOnCount;
     private ArrayList<String> addOns = new ArrayList<String>();

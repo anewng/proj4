@@ -21,7 +21,7 @@ public class OrderViewController {
     private static final double SALES_TAX = 0.06625;
     private static final int AUTOMATIC_REMOVAL_INDEX = -1;
 
-    public Order yourOrderArrayList = new Order();
+    private Order yourOrderArrayList = new Order();
 
     ObservableList<String> storeOrdersListView = FXCollections
             .observableArrayList();
@@ -41,6 +41,14 @@ public class OrderViewController {
         subTotal.setEditable(false);
         salesTax.setEditable(false);
         total.setEditable(false);
+    }
+
+    /**
+     Gets the order array list.
+     @return Order the orders list
+     */
+    public Order getYourOrderArrayList(){
+        return yourOrderArrayList;
     }
 
     /**
@@ -92,7 +100,7 @@ public class OrderViewController {
             confirmation.setContentText("Confirm order");
             Optional<ButtonType> result = confirmation.showAndWait();
             if (result.get() == ButtonType.OK) {
-                storeOrderViewController.storeOrderArrayList.addObject(yourOrderArrayList);
+                storeOrderViewController.getStoreOrderArrayList().addObject(yourOrderArrayList);
                 yourOrderArrayList = new Order();
                 yourOrders.getItems().clear();
                 subTotal.clear();
@@ -131,21 +139,32 @@ public class OrderViewController {
                 flavorSizeToken = setDonutFlavor(flavorSizeToken);
             }
 
-            int removalIndex = AUTOMATIC_REMOVAL_INDEX;
-            for(int i = 0; i < yourOrderArrayList.getOrderArray().size(); i++){
-                if(yourOrderArrayList.getOrderArray().get(i) instanceof Coffee && itemType.equals("Coffee")
-                        && ((Coffee) yourOrderArrayList.getOrderArray().get(i)).getSize().equals(flavorSizeToken)){
-                    removalIndex = i;
-                } else if(yourOrderArrayList.getOrderArray().get(i) instanceof Donut && itemType.equals("Donut")
-                        && ((Donut) yourOrderArrayList.getOrderArray().get(i)).getFlavor().equals(flavorSizeToken)){
-                    removalIndex = i;
-                }
-            }
+            int removalIndex = findRemovalIndex(itemType, flavorSizeToken);
             yourOrderArrayList.getOrderArray().remove(removalIndex);
 
             updateListView();
             updateTotals();
         }
+    }
+
+    /**
+     Searches the order list to find the index that corresponds with the item type and flavor size token
+     @param itemType indicates if the item is Coffee or Donut
+     @param flavorSizeToken indicates the flavor or size based on if the item is Coffee or Donut
+     @return int the index of the item, if found. if not found, returns the automatic removal index
+     */
+    private int findRemovalIndex(String itemType, String flavorSizeToken){
+        int removalIndex = AUTOMATIC_REMOVAL_INDEX;
+        for(int i = 0; i < yourOrderArrayList.getOrderArray().size(); i++){
+            if(yourOrderArrayList.getOrderArray().get(i) instanceof Coffee && itemType.equals("Coffee")
+                    && ((Coffee) yourOrderArrayList.getOrderArray().get(i)).getSize().equals(flavorSizeToken)){
+                removalIndex = i;
+            } else if(yourOrderArrayList.getOrderArray().get(i) instanceof Donut && itemType.equals("Donut")
+                    && ((Donut) yourOrderArrayList.getOrderArray().get(i)).getFlavor().equals(flavorSizeToken)){
+                removalIndex = i;
+            }
+        }
+        return removalIndex;
     }
 
     /**
